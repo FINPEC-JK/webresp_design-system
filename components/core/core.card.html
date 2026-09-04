@@ -1,0 +1,52 @@
+<!-- @dsCard group="Components" viewport="700x440" name="Core — Buttons, Pills, Tags, Card" subtitle="Buttons, status pills, tags, avatars and the card surface" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style> body { padding: 22px; } .stack { display:flex; flex-direction:column; gap:18px; } .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; } </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { Button, IconButton, Pill, Tag, Avatar, Card } = window.FINPECDesignSystem_ccaa11;
+const Plus = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 5v14M5 12h14"/></svg>;
+const Dl = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>;
+function Demo() {
+  return (
+    <div className="stack">
+      <div className="row">
+        <Button variant="primary" icon={<Plus/>}>Nova CPRF</Button>
+        <Button variant="secondary" icon={<Dl/>}>Exportar</Button>
+        <Button variant="ghost">Cancelar</Button>
+        <Button variant="danger">Desativar</Button>
+        <Button variant="primary" size="sm">Pequeno</Button>
+        <Button variant="secondary" disabled>Desabilitado</Button>
+        <IconButton aria-label="add"><Plus/></IconButton>
+      </div>
+      <div className="row">
+        <Pill tone="ok" dot>Concluída</Pill>
+        <Pill tone="warn">needs_review</Pill>
+        <Pill tone="danger">Sem CDZ</Pill>
+        <Pill tone="info">Processando</Pill>
+        <Pill tone="neutral">Na fila</Pill>
+        <Pill tone="accent">Em revisão</Pill>
+        <Tag>Boi Gordo</Tag>
+        <Tag>CDI</Tag>
+        <Avatar name="João Kraemer" />
+        <Avatar name="Marina Alves" size={32} />
+      </div>
+      <Card title="Resumo por missão" count={16} actions={<Button size="sm" variant="secondary">Ver todas</Button>}>
+        <div style={{font:"14px/1.5 var(--font-ui)",color:"var(--ink-2)"}}>Corpo do card sobre superfície branca com cabeçalho, contagem e ação.</div>
+      </Card>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<Demo/>);
+</script>
+</body>
+</html>

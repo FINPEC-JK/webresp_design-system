@@ -1,0 +1,25 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Primary (Azul)" subtitle="Azul royal — a espinha interativa: botões, links, ícones, gráficos" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { padding: 20px; }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .sw { display: flex; flex-direction: column; gap: 8px; }
+  .chip { width: 104px; height: 60px; border-radius: var(--r); border: 1px solid var(--border); }
+  .nm { font: var(--fw-semibold) 12px/1 var(--font-ui); color: var(--ink); }
+  .hex { font: 11px/1 var(--font-mono); color: var(--muted); margin-top: 3px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:var(--primary)"></div><div><div class="nm">Primary</div><div class="hex">#2860C6</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-hover)"></div><div><div class="nm">Hover</div><div class="hex">#204FA6</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-press)"></div><div><div class="nm">Press</div><div class="hex">#1A4488</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-soft)"></div><div><div class="nm">Soft</div><div class="hex">#E8EEFB</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--primary-ink)"></div><div><div class="nm">Ink</div><div class="hex">#1B4C92</div></div></div>
+  </div>
+</body>
+</html>

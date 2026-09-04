@@ -1,0 +1,24 @@
+<!-- @dsCard group="Colors" viewport="700x190" name="Semantic" subtitle="Success, warning, danger, info — solid + soft + ink triads" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { padding: 20px; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .col { display: flex; flex-direction: column; gap: 8px; }
+  .bar { height: 44px; border-radius: var(--r-sm); display: flex; align-items: center; padding: 0 12px; font: var(--fw-semibold) 12px/1 var(--font-ui); }
+  .nm { font: var(--fw-semibold) 12px/1 var(--font-ui); color: var(--ink); }
+  .hex { font: 11px/1 var(--font-mono); color: var(--muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="col"><div class="bar" style="background:var(--ok);color:#fff">success</div><div class="bar" style="background:var(--ok-soft);color:var(--ok-ink)">soft / ink</div><div><div class="nm">ok</div><div class="hex">#4C9A5E</div></div></div>
+    <div class="col"><div class="bar" style="background:var(--warn);color:#fff">warning</div><div class="bar" style="background:var(--warn-soft);color:var(--warn-ink)">soft / ink</div><div><div class="nm">warn</div><div class="hex">#B07206</div></div></div>
+    <div class="col"><div class="bar" style="background:var(--danger);color:#fff">danger</div><div class="bar" style="background:var(--danger-soft);color:var(--danger-ink)">soft / ink</div><div><div class="nm">danger</div><div class="hex">#C8382B</div></div></div>
+    <div class="col"><div class="bar" style="background:var(--info);color:#fff">info</div><div class="bar" style="background:var(--info-soft);color:var(--info-ink)">soft / ink</div><div><div class="nm">info</div><div class="hex">#2563C9</div></div></div>
+  </div>
+</body>
+</html>

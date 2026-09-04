@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--mute-tint)}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:#cdd3cb;border-radius:6px;border:2px solid var(--bg)}
+  @keyframes foxePulse{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</helmet>
+
+<div style="{{ rootStyle }}">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside style="width:252px;flex:none;background:var(--card);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh;position:sticky;top:0">
+    <div style="padding:20px 18px 16px;border-bottom:1px solid var(--border-soft)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="uploads/finpec-mark.png" alt="FinPec" style="height:30px;width:auto;flex:none" />
+        <div style="min-width:0">
+          <div style="font-weight:800;font-size:16px;letter-spacing:.02em;line-height:1;color:var(--text)">FOXEN-AI</div>
+          <div style="font:500 9.5px/1.35 'IBM Plex Mono',monospace;color:var(--muted);letter-spacing:.04em;margin-top:4px;text-transform:uppercase">Visual Computacional para Contagem de Gado</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:14px 12px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:4px">
+      <button onClick="{{ goInicio }}" style="{{ inicioNavStyle }}">
+        <span style="font:600 10px/1 'IBM Plex Mono',monospace;color:var(--muted);min-width:16px">★</span>
+        <span>Início</span>
+      </button>
+
+      <!-- contexto selects -->
+      <div style="padding:12px 10px 6px">
+        <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:var(--muted);margin-bottom:7px">CONTEXTO</div>
+        <select style="width:100%;border:1px solid var(--border);background:var(--input);border-radius:8px;padding:8px 10px;font:600 12px/1 'Hanken Grotesk',sans-serif;color:var(--text-2);margin-bottom:7px;cursor:pointer">
+          <option>Operação · Cara Preta</option>
+        </select>
+        <select style="width:100%;border:1px solid var(--border);background:var(--input);border-radius:8px;padding:8px 10px;font:600 12px/1 'Hanken Grotesk',sans-serif;color:var(--text-2);cursor:pointer">
+          <option>Todas as fazendas</option>
+        </select>
+      </div>
+
+      <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:var(--muted);padding:10px 10px 6px">DRONES</div>
+      <sc-for list="{{ navDrones }}" as="item" hint-placeholder-count="6">
+        <button onClick="{{ item.onClick }}" style="{{ item.style }}">
+          <span style="position:absolute;left:0;top:7px;bottom:7px;width:3px;border-radius:2px;background:var(--accent);display:{{ item.barDisplay }}"></span>
+          <span style="{{ item.numStyle }}">{{ item.n }}</span>
+          <span>{{ item.name }}</span>
+        </button>
+      </sc-for>
+
+      <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:var(--muted);padding:14px 10px 6px">FOXEN-AI</div>
+      <sc-for list="{{ navFoxe }}" as="item" hint-placeholder-count="1">
+        <button onClick="{{ item.onClick }}" style="{{ item.style }}">
+          <span style="position:absolute;left:0;top:7px;bottom:7px;width:3px;border-radius:2px;background:var(--accent);display:{{ item.barDisplay }}"></span>
+          <span style="{{ item.numStyle }}">{{ item.n }}</span>
+          <span>{{ item.name }}</span>
+        </button>
+      </sc-for>
+
+      <div style="height:1px;background:var(--border-soft);margin:14px 10px"></div>
+      <button style="display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:9px;cursor:pointer;border:none;width:100%;text-align:left;font:500 13.5px/1 'Hanken Grotesk',sans-serif;color:var(--text-2);background:transparent">Arquivos</button>
+      <button style="display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:9px;cursor:pointer;border:none;width:100%;text-align:left;font:500 13.5px/1 'Hanken Grotesk',sans-serif;color:var(--text-2);background:transparent">Cadastros</button>
+    </div>
+
+    <div style="border-top:1px solid var(--border-soft);padding:10px 12px;position:relative">
+      <sc-if value="{{ prefsOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:8px;box-shadow:0 -6px 24px rgba(0,0,0,.10)">
+          <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px">Aparência</div>
+          <div style="{{ switchWrapStyle }}">
+            <button onClick="{{ setLight }}" style="{{ lightBtnStyle }}"><span style="font-size:13px">☀</span>Claro</button>
+            <button onClick="{{ setDark }}" style="{{ darkBtnStyle }}"><span style="font-size:12px">☾</span>Escuro</button>
+          </div>
+          <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:14px 0 9px">Cor da marca</div>
+          <div style="display:flex;align-items:center;gap:9px">
+            <sc-for list="{{ swatches }}" as="sw" hint-placeholder-count="4">
+              <button onClick="{{ sw.onClick }}" style="{{ sw.style }}"></button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <button onClick="{{ togglePrefs }}" style="{{ profileBtnStyle }}">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:none">JK</div>
+        <div style="min-width:0;flex:1;text-align:left">
+          <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)">Joao Kraemer</div>
+          <div style="font-size:11px;color:var(--muted)">Administrador</div>
+        </div>
+        <span style="{{ chevronStyle }}">⌃</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main style="flex:1;min-width:0;display:flex;flex-direction:column">
+    <!-- topbar -->
+    <header style="height:66px;flex:none;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 30px;position:sticky;top:0;z-index:5">
+      <div>
+        <div style="font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">{{ pageCrumb }}</div>
+        <h1 style="margin:6px 0 0;font-size:20px;font-weight:700;letter-spacing:-.01em">{{ pageTitle }}</h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button style="border:1px solid var(--border);background:var(--card);color:var(--text-2);font:600 13px/1 'Hanken Grotesk',sans-serif;padding:9px 15px;border-radius:8px;cursor:pointer">Atualizar</button>
+        <button style="border:none;background:var(--accent);color:#fff;font:600 13px/1 'Hanken Grotesk',sans-serif;padding:10px 17px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:7px"><span style="font-size:15px;line-height:1">+</span>Nova captação</button>
+        <button style="border:1px solid var(--border);background:var(--card);color:var(--text-2);font:600 13px/1 'Hanken Grotesk',sans-serif;padding:9px 15px;border-radius:8px;cursor:pointer">Sair</button>
+      </div>
+    </header>
+
+    <!-- body -->
+    <div style="padding:26px 30px 60px;display:flex;flex-direction:column;gap:22px;max-width:1500px;width:100%">
+
+      <!-- info banner -->
+      <div style="display:flex;align-items:flex-start;gap:12px;background:var(--accent-tint);border:1px solid var(--accent-line);border-radius:10px;padding:13px 16px">
+        <span style="width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px">i</span>
+        <p style="margin:0;font-size:13px;line-height:1.5;color:var(--text-2)">A inferência automática conta fotos novas em <strong>raw</strong>. Correção humana, promoção de dataset, treino e publicação de modelo <strong>exigem ação humana</strong>.</p>
+      </div>
+
+      <!-- ============ GOVERNANCE STEPPER ============ -->
+      <sc-if value="{{ showStepper }}" hint-placeholder-val="{{ true }}">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px">
+          <div style="margin-bottom:16px">
+            <span style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">FOXEN-AI · Governança</span>
+            <div style="font-size:16px;font-weight:700;margin-top:5px">Fluxo de capacitação do modelo</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:10px">
+            <sc-for list="{{ steps }}" as="step" hint-placeholder-count="7">
+              <div style="{{ step.cardStyle }}">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                  <span style="{{ step.numStyle }}">{{ step.n }}</span>
+                  <span style="font-size:13px;font-weight:700;color:var(--text)">{{ step.title }}</span>
+                </div>
+                <div style="font-size:11.5px;line-height:1.4;color:var(--muted)">{{ step.desc }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= SCREEN · INÍCIO ================= -->
+      <sc-if value="{{ isInicio }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:22px">
+          <!-- KPIs -->
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+            <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+              <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px">
+                <div style="display:flex;align-items:center;justify-content:space-between"><span style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">{{ k.label }}</span><span style="{{ k.dot }}"></span></div>
+                <div style="margin-top:12px;font-size:34px;font-weight:800;font-family:'IBM Plex Mono',monospace;line-height:1;color:var(--text)">{{ k.value }}</div>
+                <div style="margin-top:7px;font-size:12px;color:var(--muted)">{{ k.note }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 360px;gap:22px;align-items:start">
+            <!-- missions -->
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="padding:18px 22px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Missões processadas</div><div style="margin-top:5px;font-size:16px;font-weight:700">Resumo por missão</div></div>
+              <div style="display:grid;grid-template-columns:1fr 90px 90px 110px;gap:12px;padding:11px 22px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border-soft)">
+                <span>Missão</span><span style="text-align:right">Process.</span><span style="text-align:right">Pendentes</span><span style="text-align:right">Status</span>
+              </div>
+              <sc-for list="{{ inicioMissions }}" as="m" hint-placeholder-count="4">
+                <div style="display:grid;grid-template-columns:1fr 90px 90px 110px;gap:12px;padding:14px 22px;border-bottom:1px solid var(--border-soft);align-items:center">
+                  <div><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m.name }}</div><div style="font:500 11px/1 'IBM Plex Mono',monospace;color:var(--muted);margin-top:4px">{{ m.curral }}</div></div>
+                  <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px">{{ m.proc }}</div>
+                  <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px;color:var(--warn-ink)">{{ m.pend }}</div>
+                  <div style="text-align:right"><span style="{{ m.pill.style }}">{{ m.pill.text }}</span></div>
+                </div>
+              </sc-for>
+            </div>
+            <!-- attention -->
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px">
+              <div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--warn-ink)">Requer atenção</div>
+              <div style="margin-top:5px;font-size:16px;font-weight:700;margin-bottom:14px">Próximas ações</div>
+              <sc-for list="{{ attention }}" as="a" hint-placeholder-count="3">
+                <div style="display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--border-soft)">
+                  <div style="width:8px;height:8px;border-radius:50%;background:var(--warn);margin-top:5px;flex:none"></div>
+                  <div><div style="font-size:13px;font-weight:600">{{ a.title }}</div><div style="font-size:12px;color:var(--muted);margin-top:3px;line-height:1.4">{{ a.desc }}</div></div>
+                </div>
+              </sc-for>
+              <button onClick="{{ goRevisao }}" style="margin-top:14px;width:100%;border:none;background:var(--warn-tint);color:var(--warn-ink);font:600 13px/1 'Hanken Grotesk',sans-serif;padding:11px;border-radius:9px;cursor:pointer">Abrir fila de revisão →</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= SCREEN · CONTAGENS IA ================= -->
+      <sc-if value="{{ isContagens }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:1fr 396px;gap:22px;align-items:start">
+          <!-- left -->
+          <div style="display:flex;flex-direction:column;gap:22px">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="padding:18px 22px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Captações na fila</div><div style="margin-top:5px;font-size:16px;font-weight:700">Arquivos aguardando contagem</div></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 22px">
+                <div style="display:flex;align-items:center;gap:13px"><div style="width:38px;height:38px;border-radius:9px;background:var(--border-soft);display:flex;align-items:center;justify-content:center;font-size:16px">🛰️</div><div><div style="font:600 13px/1 'IBM Plex Mono',monospace">0008_CP_FSTAMON_C_FABRICA_POR-A</div><div style="font-size:12px;color:var(--muted);margin-top:4px">5 arquivos · 5 currais</div></div></div>
+                <span style="background:var(--warn-tint);color:var(--warn-ink);font-weight:700;font-size:13px;border-radius:20px;padding:7px 14px;font-family:'IBM Plex Mono',monospace">5 pendentes</span>
+              </div>
+            </div>
+            <!-- audit table -->
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="padding:18px 22px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Auditoria operacional</div><div style="margin-top:5px;font-size:16px;font-weight:700">Job, foto e resultado</div></div>
+              <div style="display:grid;grid-template-columns:1fr 80px 90px 70px;gap:12px;padding:11px 22px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border-soft)"><span>Foto · Curral</span><span style="text-align:right">IA</span><span style="text-align:right">Status</span><span style="text-align:right">Job</span></div>
+              <sc-for list="{{ contagensAudit }}" as="r" hint-placeholder-count="6">
+                <div style="display:grid;grid-template-columns:1fr 80px 90px 70px;gap:12px;padding:13px 22px;border-bottom:1px solid var(--border-soft);align-items:center">
+                  <div><div style="font:600 12px/1.3 'IBM Plex Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.foto }}</div><div style="font-size:11px;color:var(--muted);margin-top:3px">{{ r.curral }}</div></div>
+                  <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:14px;color:{{ r.iaColor }}">{{ r.ia }}</div>
+                  <div style="text-align:right"><span style="{{ r.pill.style }}">{{ r.pill.text }}</span></div>
+                  <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)">{{ r.job }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <!-- right · jobs + viewport (kept design) -->
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+              <sc-for list="{{ contagensStats }}" as="c" hint-placeholder-count="4">
+                <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">{{ c.label }}</div><div style="margin-top:8px;font-size:24px;font-weight:800;font-family:'IBM Plex Mono',monospace;color:{{ c.color }}">{{ c.value }}</div></div>
+              </sc-for>
+            </div>
+            <!-- viewport -->
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">Job concluído</div><div style="display:flex;align-items:center;gap:6px;font:600 11px/1 'Hanken Grotesk',sans-serif;color:var(--ok-ink)"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent)"></span>Concluído</div></div>
+              <div style="position:relative;aspect-ratio:4/3;background:repeating-linear-gradient(118deg,#2a322b 0 14px,#313a31 14px 28px)">
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:500 11px/1 'IBM Plex Mono',monospace;color:rgba(255,255,255,.3);letter-spacing:.08em">▢ FOTO DO DRONE · CF-028</div>
+                <div style="position:absolute;top:20%;left:12%;width:14%;height:22%;border:2px solid #4cd07d;border-radius:2px"><span style="position:absolute;top:-15px;left:-2px;background:#4cd07d;color:#0c2417;font:600 8px/1 'IBM Plex Mono',monospace;padding:2px 4px;border-radius:2px">0.98</span></div>
+                <div style="position:absolute;top:44%;left:38%;width:12%;height:20%;border:2px solid #4cd07d;border-radius:2px"></div>
+                <div style="position:absolute;top:30%;left:62%;width:13%;height:19%;border:2px solid #4cd07d;border-radius:2px"><span style="position:absolute;top:-15px;left:-2px;background:#4cd07d;color:#0c2417;font:600 8px/1 'IBM Plex Mono',monospace;padding:2px 4px;border-radius:2px">0.97</span></div>
+                <div style="position:absolute;top:58%;left:22%;width:11%;height:17%;border:2px solid #4cd07d;border-radius:2px"></div>
+                <div style="position:absolute;top:52%;left:72%;width:12%;height:19%;border:2px solid #4cd07d;border-radius:2px"></div>
+                <div style="position:absolute;left:14px;bottom:14px;background:rgba(12,18,13,.8);backdrop-filter:blur(6px);border-radius:9px;padding:11px 16px"><div style="font:600 10px/1 'IBM Plex Mono',monospace;color:#8fe0ad;letter-spacing:.1em;text-transform:uppercase">Resultado IA</div><div style="margin-top:5px;font-size:30px;font-weight:800;color:#fff;line-height:1;font-family:'IBM Plex Mono',monospace">132</div></div>
+              </div>
+              <div style="padding:16px 18px">
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:13px;font-size:12px">
+                  <div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Engine</div><div style="margin-top:5px;font-weight:600;font-family:'IBM Plex Mono',monospace;font-size:11px">prototype-local-deterministic</div></div>
+                  <div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Status revisão</div><div style="margin-top:5px"><span style="display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;color:var(--warn-ink);background:var(--warn-tint)">needs_review</span></div></div>
+                </div>
+                <button style="margin-top:15px;width:100%;border:1px solid var(--border);background:var(--card);color:var(--text-2);font:600 13px/1 'Hanken Grotesk',sans-serif;padding:11px;border-radius:9px;cursor:pointer">Reprocessar explicitamente</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= SCREEN · REVISÃO ================= -->
+      <sc-if value="{{ isRevisao }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:22px">
+          <div style="display:grid;grid-template-columns:1fr 396px;gap:22px;align-items:start">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="padding:18px 22px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Captações na fila</div><div style="margin-top:5px;font-size:16px;font-weight:700">Arquivos aguardando correção</div></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 22px"><div style="display:flex;align-items:center;gap:13px"><div style="width:38px;height:38px;border-radius:9px;background:var(--border-soft);display:flex;align-items:center;justify-content:center;font-size:16px">🛰️</div><div><div style="font:600 13px/1 'IBM Plex Mono',monospace">0008_CP_FSTAMON_C_FABRICA_POR-A</div><div style="font-size:12px;color:var(--muted);margin-top:4px">6 arquivos · 6 currais</div></div></div><span style="background:var(--warn-tint);color:var(--warn-ink);font-weight:700;font-size:13px;border-radius:20px;padding:7px 14px;font-family:'IBM Plex Mono',monospace">6 pendentes</span></div>
+            </div>
+            <!-- audited image -->
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--border-soft)"><div><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">Imagem auditada</div><div style="margin-top:5px;font-size:16px;font-weight:700;font-family:'IBM Plex Mono',monospace">CF-033</div></div><div style="display:flex;gap:8px"><button style="border:1px solid var(--ok-border);background:var(--ok-tint);color:var(--ok-ink);font:600 12px/1 'Hanken Grotesk',sans-serif;padding:8px 13px;border-radius:8px;cursor:pointer">Aprovar</button><button onClick="{{ openModal }}" style="border:none;background:var(--accent);color:#fff;font:600 12px/1 'Hanken Grotesk',sans-serif;padding:8px 13px;border-radius:8px;cursor:pointer">Corrigir</button></div></div>
+              <div style="position:relative;aspect-ratio:4/3;background:repeating-linear-gradient(118deg,#5a4636 0 16px,#63503e 16px 32px)"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:500 11px/1 'IBM Plex Mono',monospace;color:rgba(255,255,255,.35)">▢ FOTO AÉREA · CURRAL CF-033</div></div>
+              <div style="padding:14px 18px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;font-size:12px"><div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Resultado IA</div><div style="margin-top:5px;font-size:18px;font-weight:700;font-family:'IBM Plex Mono',monospace">119</div></div><div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Status</div><div style="margin-top:7px"><span style="display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;color:var(--warn-ink);background:var(--warn-tint)">needs_review</span></div></div></div>
+            </div>
+          </div>
+          <!-- fila table -->
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border-soft)"><div><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Fila de revisão</div><div style="margin-top:5px;font-size:16px;font-weight:700">Fotos contadas para aprovar ou corrigir</div></div><div style="display:flex;gap:6px;background:var(--border-soft);padding:4px;border-radius:9px"><span style="background:var(--card);color:var(--text);font:600 12px/1 'Hanken Grotesk',sans-serif;padding:7px 13px;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.06)">Pendentes</span><span style="color:var(--muted);font:600 12px/1 'Hanken Grotesk',sans-serif;padding:7px 13px">Divergências</span><span style="color:var(--muted);font:600 12px/1 'Hanken Grotesk',sans-serif;padding:7px 13px">Conferidas</span></div></div>
+            <div style="display:grid;grid-template-columns:1fr 90px 80px 80px 80px 120px;gap:12px;padding:11px 22px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border-soft)"><span>Foto</span><span>Curral</span><span style="text-align:right">IA</span><span style="text-align:right">Monit.</span><span style="text-align:right">Dif.</span><span style="text-align:right">Status</span></div>
+            <sc-for list="{{ revRows }}" as="r" hint-placeholder-count="5">
+              <div style="display:grid;grid-template-columns:1fr 90px 80px 80px 80px 120px;gap:12px;padding:13px 22px;border-bottom:1px solid var(--border-soft);align-items:center">
+                <div style="font:600 12px/1 'IBM Plex Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.foto }}</div>
+                <div style="font:500 12px/1 'IBM Plex Mono',monospace;color:var(--text-2)">{{ r.curral }}</div>
+                <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px">{{ r.ia }}</div>
+                <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text-2)">{{ r.monit }}</div>
+                <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px;color:var(--warn-ink)">{{ r.dif }}</div>
+                <div style="text-align:right"><span style="{{ r.pill.style }}">{{ r.pill.text }}</span></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= SCREEN · DIVERGÊNCIAS ================= -->
+      <sc-if value="{{ isDivergencias }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:22px">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+            <sc-for list="{{ divStats }}" as="c" hint-placeholder-count="4">
+              <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">{{ c.label }}</div><div style="margin-top:10px;font-size:30px;font-weight:800;font-family:'IBM Plex Mono',monospace;color:{{ c.color }}">{{ c.value }}</div></div>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 360px;gap:22px;align-items:start">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="padding:18px 22px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--warn-ink)">Fila priorizada</div><div style="margin-top:5px;font-size:16px;font-weight:700">Divergências CDZ</div></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+                <div style="position:relative;background:repeating-linear-gradient(118deg,#7a5a3e 0 16px,#85643f 16px 32px);min-height:300px"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:500 11px/1 'IBM Plex Mono',monospace;color:rgba(255,255,255,.4)">▢ CF-028</div></div>
+                <div style="padding:20px 22px">
+                  <span style="display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;color:var(--crit-ink);background:var(--crit-tint)">Sem contexto</span>
+                  <div style="font:600 13px/1.4 'IBM Plex Mono',monospace;margin-top:12px;word-break:break-all">CF-028 · DJI_...0029_D.JPG</div>
+                  <div style="font-size:12px;color:var(--muted);margin-top:6px">Curral CF-028 · Não encontrado</div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:18px;font-size:12px">
+                    <div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">IA</div><div style="margin-top:5px;font-size:20px;font-weight:700;font-family:'IBM Plex Mono',monospace">132</div></div>
+                    <div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">CDZ obrigatório</div><div style="margin-top:5px;font-size:20px;font-weight:700;font-family:'IBM Plex Mono',monospace;color:var(--crit)">—</div></div>
+                    <div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Dif. absoluta</div><div style="margin-top:5px;font-weight:700;font-family:'IBM Plex Mono',monospace">—</div></div>
+                    <div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Fonte</div><div style="margin-top:5px;font-weight:700;font-family:'IBM Plex Mono',monospace">CDZ</div></div>
+                  </div>
+                  <button style="margin-top:18px;width:100%;border:none;background:var(--warn);color:#fff;font:600 13px/1 'Hanken Grotesk',sans-serif;padding:11px;border-radius:9px;cursor:pointer">Corrigir contagem</button>
+                </div>
+              </div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="padding:18px 20px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--crit-ink)">Evidências</div><div style="margin-top:5px;font-size:15px;font-weight:700">Casos críticos primeiro</div></div>
+              <sc-for list="{{ divEvidencias }}" as="e" hint-placeholder-count="6">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 20px;border-bottom:1px solid var(--border-soft);background:{{ e.rowBg }}"><div style="min-width:0"><div style="font:600 12px/1 'IBM Plex Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ e.foto }}</div><div style="font-size:11px;color:var(--muted);margin-top:4px">{{ e.missao }}</div></div><div style="font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px;flex:none">{{ e.ia }}</div></div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= SCREEN · RESULTADOS ================= -->
+      <sc-if value="{{ isResultados }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:22px">
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px">
+            <sc-for list="{{ resStats }}" as="c" hint-placeholder-count="6">
+              <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px 16px"><div style="font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">{{ c.label }}</div><div style="margin-top:9px;font-size:24px;font-weight:800;font-family:'IBM Plex Mono',monospace;color:{{ c.color }}">{{ c.value }}</div></div>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 360px;gap:22px;align-items:start">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="padding:18px 22px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Missões processadas</div><div style="margin-top:5px;font-size:16px;font-weight:700">Resumo por missão</div></div>
+              <div style="padding:22px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div style="font:600 13px/1 'IBM Plex Mono',monospace">0008_CP_FSTAMON_C_FABRICA_POR-A</div><span style="font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px;color:var(--accent)">13/16</span></div>
+                <div style="height:9px;border-radius:5px;background:var(--mute-tint);overflow:hidden"><div style="width:81%;height:100%;background:var(--accent);border-radius:5px"></div></div>
+                <div style="margin-top:9px;font-size:12px;color:var(--muted)">13 de 16 processadas · 11 pendente(s) · 5 revisadas</div>
+              </div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="padding:15px 20px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Imagem auditada</div></div>
+              <div style="position:relative;aspect-ratio:16/10;background:repeating-linear-gradient(118deg,#6a4f3a 0 16px,#75583e 16px 32px)"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:500 11px/1 'IBM Plex Mono',monospace;color:rgba(255,255,255,.4)">▢ CF-035</div></div>
+              <div style="padding:16px 20px">
+                <div style="font:600 12px/1.4 'IBM Plex Mono',monospace;word-break:break-all">CF-035 · DJI_...0036_D.JPG</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:6px">Curral CF-035 · Sem match · Sem contexto suficiente</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:16px;font-size:12px"><div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">IA</div><div style="margin-top:5px;font-size:18px;font-weight:700;font-family:'IBM Plex Mono',monospace">67</div></div><div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">CDZ</div><div style="margin-top:5px;font-size:18px;font-weight:700;font-family:'IBM Plex Mono',monospace;color:var(--muted)">—</div></div><div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Match</div><div style="margin-top:7px"><span style="display:inline-block;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:600;color:var(--crit-ink);background:var(--crit-tint)">Não encontrado</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= SCREEN · FOTOS ================= -->
+      <sc-if value="{{ isFotos }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:22px">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+            <sc-for list="{{ fotoStats }}" as="c" hint-placeholder-count="4">
+              <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">{{ c.label }}</div><div style="margin-top:10px;font-size:30px;font-weight:800;font-family:'IBM Plex Mono',monospace;color:{{ c.color }}">{{ c.value }}</div></div>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 360px;gap:22px;align-items:start">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="padding:18px 22px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Arquivo raw e contexto</div><div style="margin-top:5px;font-size:16px;font-weight:700">Fotos por operação, missão e curral</div></div>
+              <div style="display:grid;grid-template-columns:1fr 90px 120px;gap:12px;padding:11px 22px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border-soft)"><span>Arquivo</span><span>Curral</span><span style="text-align:right">Status</span></div>
+              <sc-for list="{{ fotoList }}" as="f" hint-placeholder-count="6">
+                <div style="display:grid;grid-template-columns:1fr 90px 120px;gap:12px;padding:13px 22px;border-bottom:1px solid var(--border-soft);align-items:center;background:{{ f.rowBg }}"><div style="font:600 12px/1 'IBM Plex Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.file }}</div><div style="font:500 12px/1 'IBM Plex Mono',monospace;color:var(--text-2)">{{ f.curral }}</div><div style="text-align:right"><span style="{{ f.pill.style }}">{{ f.pill.text }}</span></div></div>
+              </sc-for>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="padding:15px 20px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Navegação operacional</div><div style="margin-top:5px;font-size:15px;font-weight:700">Foto, job e resultado</div></div>
+              <div style="padding:18px 20px">
+                <span style="display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;color:var(--ok-ink);background:var(--ok-tint)">Revisada</span>
+                <div style="font:600 12px/1.4 'IBM Plex Mono',monospace;margin-top:12px;word-break:break-all">CF-005 · DJI_...0006_D.JPG</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;font-size:12px">
+                  <div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Capturada em</div><div style="margin-top:5px;font-weight:600;font-family:'IBM Plex Mono',monospace;font-size:11px">10/07/2025 12:59</div></div>
+                  <div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Job</div><div style="margin-top:5px;font-weight:600;font-family:'IBM Plex Mono',monospace">#2 · Concluído</div></div>
+                  <div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Resultado IA</div><div style="margin-top:5px;font-size:18px;font-weight:700;font-family:'IBM Plex Mono',monospace">111</div></div>
+                  <div><div style="font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Curral</div><div style="margin-top:5px;font-weight:600;font-family:'IBM Plex Mono',monospace">CF-005</div></div>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:18px"><button style="flex:1;border:1px solid var(--border);background:var(--card);color:var(--text-2);font:600 12px/1 'Hanken Grotesk',sans-serif;padding:10px;border-radius:8px;cursor:pointer">Abrir job</button><button style="flex:1;border:none;background:var(--accent);color:#fff;font:600 12px/1 'Hanken Grotesk',sans-serif;padding:10px;border-radius:8px;cursor:pointer">Abrir resultado</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= SCREEN · UPLOAD ================= -->
+      <sc-if value="{{ isUpload }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:22px">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+            <div style="padding:18px 22px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Upload para teste e treinamento</div><div style="margin-top:5px;font-size:16px;font-weight:700">Selecionar imagens do drone</div></div>
+            <div style="padding:22px">
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
+                <select style="border:1px solid var(--border);background:var(--input);border-radius:9px;padding:10px 12px;font:600 12px/1 'Hanken Grotesk',sans-serif;color:var(--text-2)"><option>Cara Preta</option></select>
+                <select style="border:1px solid var(--border);background:var(--input);border-radius:9px;padding:10px 12px;font:600 12px/1 'Hanken Grotesk',sans-serif;color:var(--text-2)"><option>Fazenda Santa Monica</option></select>
+                <select style="border:1px solid var(--border);background:var(--input);border-radius:9px;padding:10px 12px;font:600 12px/1 'Hanken Grotesk',sans-serif;color:var(--text-2)"><option>Confinamento Fabrica</option></select>
+                <select style="border:1px solid var(--border);background:var(--input);border-radius:9px;padding:10px 12px;font:600 12px/1 'Hanken Grotesk',sans-serif;color:var(--text-2)"><option>0008_CP_FSTAMON_...</option></select>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                <div style="border:2px dashed var(--border);border-radius:12px;padding:26px;text-align:center;background:var(--input)"><div style="font-size:24px">📁</div><div style="font-size:14px;font-weight:700;margin-top:8px">Selecionar arquivos</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Escolha uma ou mais imagens para abrir</div></div>
+                <div style="border:2px dashed var(--border);border-radius:12px;padding:26px;text-align:center;background:var(--input)"><div style="font-size:24px">🗂️</div><div style="font-size:14px;font-weight:700;margin-top:8px">Selecionar pasta</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Carrega todas as imagens da pasta escolhida</div></div>
+              </div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+            <sc-for list="{{ uploadStats }}" as="c" hint-placeholder-count="4">
+              <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px"><div style="font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">{{ c.label }}</div><div style="margin-top:9px;font-size:21px;font-weight:800;font-family:'IBM Plex Mono',monospace;color:{{ c.color }}">{{ c.value }}</div></div>
+            </sc-for>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--border-soft)"><div style="font-size:13px;color:var(--text-2)">1 imagem enviada · 1 job criado · 0 já existente na fila</div><div style="display:flex;gap:8px"><button style="border:1px solid var(--border);background:var(--card);color:var(--text-2);font:600 12px/1 'Hanken Grotesk',sans-serif;padding:9px 14px;border-radius:8px;cursor:pointer">Retransmitir</button><button style="border:none;background:var(--accent);color:#fff;font:600 12px/1 'Hanken Grotesk',sans-serif;padding:9px 16px;border-radius:8px;cursor:pointer">Concluir envio</button></div></div>
+            <div style="display:grid;grid-template-columns:1fr 110px 120px 110px;gap:12px;padding:11px 22px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border-soft)"><span>Arquivo</span><span style="text-align:right">Tamanho</span><span style="text-align:right">Tipo</span><span style="text-align:right">Status</span></div>
+            <sc-for list="{{ uploadFiles }}" as="f" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:1fr 110px 120px 110px;gap:12px;padding:13px 22px;border-bottom:1px solid var(--border-soft);align-items:center"><div style="font:600 12px/1 'IBM Plex Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.file }}</div><div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px">{{ f.size }}</div><div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)">{{ f.type }}</div><div style="text-align:right"><span style="{{ f.pill.style }}">{{ f.pill.text }}</span></div></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= SCREEN · USUÁRIOS ================= -->
+      <sc-if value="{{ isUsuarios }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:22px">
+          <div style="display:grid;grid-template-columns:1fr 360px;gap:22px;align-items:start">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border-soft)"><div><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Controle de acesso</div><div style="margin-top:5px;font-size:16px;font-weight:700">Criar usuário</div></div><button style="border:1px solid var(--border);background:var(--card);color:var(--muted);font:600 12px/1 'Hanken Grotesk',sans-serif;padding:8px 13px;border-radius:8px;cursor:pointer">Limpar</button></div>
+              <div style="padding:22px">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                  <div><label style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">Nome</label><input style="display:block;width:100%;margin-top:7px;border:1px solid var(--border);background:var(--input);border-radius:9px;padding:11px 13px;font:500 13px/1 'Hanken Grotesk',sans-serif;color:var(--text)" placeholder="Nome completo" /></div>
+                  <div><label style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">E-mail</label><input style="display:block;width:100%;margin-top:7px;border:1px solid var(--border);background:var(--input);border-radius:9px;padding:11px 13px;font:500 13px/1 'Hanken Grotesk',sans-serif;color:var(--text)" placeholder="email@finpec.com" /></div>
+                </div>
+                <div style="margin-top:16px"><label style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">Status</label><select style="display:block;width:100%;margin-top:7px;border:1px solid var(--border);background:var(--input);border-radius:9px;padding:11px 13px;font:500 13px/1 'Hanken Grotesk',sans-serif;color:var(--text)"><option>Ativo</option><option>Inativo</option></select></div>
+                <div style="display:flex;gap:12px;margin-top:16px"><label style="flex:1;display:flex;align-items:center;gap:9px;border:1px solid var(--border);border-radius:9px;padding:12px 14px;cursor:pointer"><input type="checkbox" /><span style="font-size:13px;font-weight:600">Administrador</span></label><label style="flex:1;display:flex;align-items:center;gap:9px;border:1px solid var(--ok-border);background:var(--accent-tint);border-radius:9px;padding:12px 14px;cursor:pointer"><input type="checkbox" checked /><span style="font-size:13px;font-weight:600">Analista</span></label></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
+                  <div><label style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">Senha</label><input type="password" style="display:block;width:100%;margin-top:7px;border:1px solid var(--border);background:var(--input);border-radius:9px;padding:11px 13px;font:500 13px/1 'Hanken Grotesk',sans-serif" value="senha123" /></div>
+                  <div><label style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">Confirmar senha</label><input type="password" style="display:block;width:100%;margin-top:7px;border:1px solid var(--border);background:var(--input);border-radius:9px;padding:11px 13px;font:500 13px/1 'Hanken Grotesk',sans-serif" value="senha123" /></div>
+                </div>
+                <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:6px 18px">
+                  <sc-for list="{{ passwordRules }}" as="r" hint-placeholder-count="7">
+                    <div style="display:flex;align-items:center"><span style="{{ r.markStyle }}">{{ r.mark }}</span><span style="{{ r.textStyle }}">{{ r.text }}</span></div>
+                  </sc-for>
+                </div>
+                <button style="margin-top:20px;border:none;background:var(--accent);color:#fff;font:600 13px/1 'Hanken Grotesk',sans-serif;padding:12px 22px;border-radius:9px;cursor:pointer">Criar usuário</button>
+              </div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+              <div style="padding:18px 20px;border-bottom:1px solid var(--border-soft)"><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--warn-ink)">Segurança de login</div><div style="margin-top:5px;font-size:15px;font-weight:700">Bloqueio por senha errada</div></div>
+              <div style="padding:20px"><label style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">Tentativas antes do bloqueio</label><input style="display:block;width:100%;margin-top:8px;border:1px solid var(--border);background:var(--input);border-radius:9px;padding:11px 13px;font:600 14px/1 'IBM Plex Mono',monospace" value="10" /><div style="font-size:12px;color:var(--muted);margin-top:10px">Valor atual: 10</div><button style="margin-top:16px;width:100%;border:none;background:var(--accent);color:#fff;font:600 13px/1 'Hanken Grotesk',sans-serif;padding:11px;border-radius:9px;cursor:pointer">Salvar</button></div>
+            </div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border-soft)"><div><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Usuários cadastrados</div><div style="margin-top:5px;font-size:16px;font-weight:700">Gestão administrativa</div></div><input style="border:1px solid var(--border);background:var(--input);border-radius:9px;padding:9px 13px;font:500 13px/1 'Hanken Grotesk',sans-serif;width:220px" placeholder="Filtrar por e-mail" /></div>
+            <div style="display:grid;grid-template-columns:1fr 1.4fr 90px 120px 150px 200px;gap:12px;padding:11px 22px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border-soft)"><span>Nome</span><span>E-mail</span><span>Status</span><span>Perfil</span><span>Último login</span><span style="text-align:right">Ações</span></div>
+            <sc-for list="{{ usuarios }}" as="u" hint-placeholder-count="4">
+              <div style="display:grid;grid-template-columns:1fr 1.4fr 90px 120px 150px 200px;gap:12px;padding:14px 22px;border-bottom:1px solid var(--border-soft);align-items:center">
+                <div style="font-size:13px;font-weight:600">{{ u.nome }}</div>
+                <div style="font:500 12px/1 'IBM Plex Mono',monospace;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ u.email }}</div>
+                <div><span style="{{ u.pill.style }}">{{ u.pill.text }}</span></div>
+                <div style="font-size:13px;color:var(--text-2)">{{ u.perfil }}</div>
+                <div style="font:500 12px/1 'IBM Plex Mono',monospace;color:var(--muted)">{{ u.login }}</div>
+                <div style="display:flex;gap:6px;justify-content:flex-end"><button style="border:1px solid var(--border);background:var(--card);color:var(--text-2);font:600 11px/1 'Hanken Grotesk',sans-serif;padding:7px 11px;border-radius:7px;cursor:pointer">Editar</button><button style="border:1px solid var(--border);background:var(--card);color:var(--warn-ink);font:600 11px/1 'Hanken Grotesk',sans-serif;padding:7px 11px;border-radius:7px;cursor:pointer">Desativar</button><button style="border:1px solid var(--crit-border);background:var(--card);color:var(--crit-ink);font:600 11px/1 'Hanken Grotesk',sans-serif;padding:7px 11px;border-radius:7px;cursor:pointer">Deletar</button></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </main>
+
+  <!-- ================= MODAL · CORREÇÃO ================= -->
+  <sc-if value="{{ modal }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:rgba(20,28,22,.45);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;z-index:50;font-family:'Hanken Grotesk',sans-serif" onClick="{{ closeModal }}">
+      <div style="background:var(--card);border-radius:16px;width:480px;max-width:92vw;box-shadow:0 24px 60px rgba(0,0,0,.25);overflow:hidden">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:22px 24px 0"><div><div style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Correção humana</div><div style="margin-top:6px;font-size:22px;font-weight:800;font-family:'IBM Plex Mono',monospace">CF-006</div></div><button onClick="{{ closeModal }}" style="border:1px solid var(--border);background:var(--card);color:var(--muted);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px">×</button></div>
+        <div style="padding:20px 24px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div><label style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">Contagem IA</label><input disabled style="display:block;width:100%;margin-top:7px;border:1px solid var(--border);background:var(--border-soft);border-radius:9px;padding:11px 13px;font:700 15px/1 'IBM Plex Mono',monospace;color:var(--text-2)" value="160" /></div>
+            <div><label style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)">Contagem corrigida</label><input style="display:block;width:100%;margin-top:7px;border:1px solid var(--accent);background:var(--accent-tint);border-radius:9px;padding:11px 13px;font:700 15px/1 'IBM Plex Mono',monospace;color:var(--accent-ink)" value="164" /></div>
+          </div>
+          <div style="margin-top:16px"><label style="font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">Observação</label><textarea style="display:block;width:100%;margin-top:7px;border:1px solid var(--border);background:var(--input);border-radius:9px;padding:11px 13px;font:500 13px/1.4 'Hanken Grotesk',sans-serif;color:var(--text);min-height:84px;resize:vertical">Faltaram 4 bois</textarea></div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:10px;padding:0 24px 22px"><button onClick="{{ closeModal }}" style="border:1px solid var(--border);background:var(--card);color:var(--text-2);font:600 13px/1 'Hanken Grotesk',sans-serif;padding:11px 18px;border-radius:9px;cursor:pointer">Cancelar</button><button onClick="{{ closeModal }}" style="border:none;background:var(--accent);color:#fff;font:600 13px/1 'Hanken Grotesk',sans-serif;padding:11px 18px;border-radius:9px;cursor:pointer">Salvar correção</button></div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1320,&quot;height&quot;:900},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;verde&quot;,&quot;ambar&quot;,&quot;azul&quot;,&quot;terra&quot;],&quot;default&quot;:&quot;verde&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { screen:'inicio', modal:false, revTab:'pendentes', theme:'light', accent:'verde', prefsOpen:false };
+  componentDidMount(){ const p=this.props||{}; const u={}; if(p.theme) u.theme=p.theme; if(p.accent) u.accent=p.accent; if(Object.keys(u).length) this.setState(u); }
+  go(id){ const self=this; return function(){ self.setState({screen:id, modal:false}); window.scrollTo(0,0); }; }
+  hexToRgba(hex,a){ const h=hex.replace('#',''); const n=parseInt(h.length===3?h.split('').map(function(x){return x+x;}).join(''):h,16); return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')'; }
+  themeVars(theme,accent){
+    const self=this;
+    const accents={
+      verde:{ light:{a:'#2f7d4f',ink:'#1b6e41'}, dark:{a:'#5cc185',ink:'#bfe9cf'} },
+      ambar:{ light:{a:'#c0791f',ink:'#8f5512'}, dark:{a:'#e3a44f',ink:'#f2cf95'} },
+      azul:{  light:{a:'#2a6f9e',ink:'#1f5680'}, dark:{a:'#5fa3da',ink:'#bcd9f2'} },
+      terra:{ light:{a:'#b35535',ink:'#8a3f27'}, dark:{a:'#e0875f',ink:'#f2c2ac'} }
+    };
+    const ac=(accents[accent]||accents.verde)[theme==='dark'?'dark':'light'];
+    const base = theme==='dark' ? {
+      '--bg':'#0e1310','--card':'#171d18','--border':'#283029','--border-soft':'#222a23','--input':'#1b221c',
+      '--text':'#eef2ec','--text-2':'#aab4ab','--muted':'#7a857c','--step-bg':'#141a15','--dot-mute':'#3a443c','--mute-tint':'#222a23',
+      '--ok':'#52b97e','--ok-ink':'#86d6a4','--ok-tint':self.hexToRgba('#52b97e',.16),'--ok-border':self.hexToRgba('#52b97e',.32),
+      '--warn':'#e0954a','--warn-ink':'#eab676','--warn-tint':self.hexToRgba('#e0954a',.16),
+      '--info-ink':'#7fb0e0','--info-tint':self.hexToRgba('#7fb0e0',.16),
+      '--crit':'#e06a55','--crit-ink':'#f0a293','--crit-tint':self.hexToRgba('#e06a55',.16),'--crit-border':self.hexToRgba('#e06a55',.32)
+    } : {
+      '--bg':'#f4f6f3','--card':'#ffffff','--border':'#e6e9e4','--border-soft':'#eef0eb','--input':'#f7f9f6',
+      '--text':'#1c241f','--text-2':'#5b6660','--muted':'#9aa39d','--step-bg':'#fbfcfa','--dot-mute':'#c2cabf','--mute-tint':'#eef1ec',
+      '--ok':'#2f7d4f','--ok-ink':'#1d6b41','--ok-tint':'#e6f3ec','--ok-border':'#cfe4d6',
+      '--warn':'#d97a2b','--warn-ink':'#9a5a12','--warn-tint':'#fbeede',
+      '--info-ink':'#2a5d8f','--info-tint':'#e7eef8',
+      '--crit':'#c0392b','--crit-ink':'#a23b2a','--crit-tint':'#fbe7e2','--crit-border':'#f0d8d2'
+    };
+    base['--accent']=ac.a;
+    base['--accent-ink']=ac.ink;
+    base['--accent-tint']=self.hexToRgba(ac.a, theme==='dark'?.17:.12);
+    base['--nav-active']=self.hexToRgba(ac.a, theme==='dark'?.20:.14);
+    base['--accent-line']=self.hexToRgba(ac.a, theme==='dark'?.32:.30);
+    return base;
+  }
+  pill(text, tone){
+    const map={ go:['var(--ok-ink)','var(--ok-tint)'], warn:['var(--warn-ink)','var(--warn-tint)'], info:['var(--info-ink)','var(--info-tint)'], mute:['var(--text-2)','var(--mute-tint)'], crit:['var(--crit-ink)','var(--crit-tint)'] };
+    const c=(map[tone]||map.mute); 
+    return { text, style:{display:'inline-block',padding:'3px 9px',borderRadius:'20px',fontSize:'11px',fontWeight:'600',color:c[0],background:c[1],whiteSpace:'nowrap'} };
+  }
+  navStyle(active){
+    return {display:'flex',alignItems:'center',gap:'11px',padding:'9px 12px 9px 14px',borderRadius:'9px',cursor:'pointer',border:'none',width:'100%',textAlign:'left',fontFamily:"'Hanken Grotesk',sans-serif",fontSize:'13.5px',fontWeight:active?'600':'500',color:active?'var(--accent-ink)':'var(--text-2)',background:active?'var(--nav-active)':'transparent',position:'relative'};
+  }
+  numStyle(active){ return {fontFamily:"'IBM Plex Mono',monospace",fontSize:'10px',fontWeight:'600',color:active?'var(--accent)':'var(--muted)',minWidth:'16px'}; }
+
+  renderVals(){
+    const s=this.state.screen;
+    const self=this;
+    const theme=this.state.theme, accent=this.state.accent, isDark=theme==='dark';
+    const vars=this.themeVars(theme,accent);
+    if(typeof document!=='undefined'){ document.body.style.background=vars['--bg']; }
+    const rootStyle=Object.assign({display:'flex',minHeight:'100vh',fontFamily:"'Hanken Grotesk',system-ui,sans-serif",background:'var(--bg)',color:'var(--text)'}, vars);
+    const segBase={fontFamily:"'Hanken Grotesk',sans-serif",fontWeight:'600',fontSize:'12px',padding:'6px 11px',borderRadius:'7px',border:'none',cursor:'pointer',display:'flex',alignItems:'center',gap:'5px'};
+    const onSeg=Object.assign({},segBase,{background:'var(--card)',color:'var(--text)',boxShadow:'0 1px 2px rgba(0,0,0,.14)'});
+    const offSeg=Object.assign({},segBase,{background:'transparent',color:'var(--muted)'});
+    const lightBtnStyle=isDark?offSeg:onSeg, darkBtnStyle=isDark?onSeg:offSeg;
+    const switchWrapStyle={display:'inline-flex',gap:'3px',background:'var(--mute-tint)',border:'1px solid var(--border)',borderRadius:'9px',padding:'3px'};
+    const setLight=function(){ self.setState({theme:'light'}); }, setDark=function(){ self.setState({theme:'dark'}); };
+    const prefsOpen=this.state.prefsOpen;
+    const togglePrefs=function(){ self.setState(function(st){ return {prefsOpen:!st.prefsOpen}; }); };
+    const profileBtnStyle={display:'flex',alignItems:'center',gap:'10px',width:'100%',background:(prefsOpen?'var(--mute-tint)':'transparent'),border:'1px solid '+(prefsOpen?'var(--border)':'transparent'),borderRadius:'10px',padding:'7px 9px',cursor:'pointer'};
+    const chevronStyle={fontSize:'14px',color:'var(--muted)',flex:'none',transition:'transform .18s ease',transform:(prefsOpen?'rotate(0deg)':'rotate(180deg)')};
+    const accentList=[['verde','#2f7d4f','#5cc185'],['ambar','#c0791f','#e3a44f'],['azul','#2a6f9e','#5fa3da'],['terra','#b35535','#e0875f']];
+    const swatches=accentList.map(function(p){ return {key:p[0], onClick:function(){ self.setState({accent:p[0]}); }, style:{width:'19px',height:'19px',borderRadius:'50%',cursor:'pointer',background:(isDark?p[2]:p[1]),border:(accent===p[0]?'2px solid var(--text)':'2px solid var(--border)'),padding:'0',flex:'none'} }; });
+    const mk=(id,n,name)=>({id,n,name,onClick:this.go(id),style:this.navStyle(s===id),numStyle:this.numStyle(s===id),barDisplay:(s===id?'block':'none')});
+    const navDrones=[mk('upload','01','Upload Drone'),mk('contagens','02','Contagens IA'),mk('revisao','03','Correções de Contagem'),mk('resultados','04','Resultados por Missão'),mk('divergencias','05','Divergências CDZ'),mk('fotos','06','Gestão de Fotos do Drone')];
+    const navFoxe=[mk('usuarios','17','Usuários e Perfis')];
+
+    const meta={inicio:['Visão geral','Painel operacional'],upload:['Drones / Upload','Upload Drone'],contagens:['Drones / Contagens','Contagens IA'],revisao:['FOXEN-AI / Operacional','Fila de Revisão de Contagens'],resultados:['Drones / Resultados','Resultados por Missão'],divergencias:['Drones / Divergências','Divergências CDZ'],fotos:['Drones / Arquivos','Gestão de Fotos do Drone'],usuarios:['FOXEN-AI / Acesso','Usuários e Perfis']};
+    const m=meta[s]||meta.inicio;
+
+    const stepMap={upload:1,fotos:1,contagens:2,revisao:3,resultados:3,divergencias:3};
+    const activeStep=stepMap[s]||0;
+    const stepData=[['01','Captação','Recebe fotos raw e cria lotes rastreáveis.'],['02','Anotação','Marca área e gado sem promover dados.'],['03','Revisão','Valida contagens corrigidas e anotações.'],['04','Datasets','Fecha versões imutáveis para treino.'],['05','Treinos','Executa quando um usuário inicia a rodada.'],['06','Avaliações','Compara métricas e exige decisão humana.'],['07','Registry','Publica modelo aprovado por tipo.']];
+    const steps=stepData.map(function(d){
+      const active=(+d[0])===activeStep;
+      return {n:d[0],title:d[1],desc:d[2],
+        cardStyle:{border:active?'1px solid var(--accent)':'1px solid var(--border-soft)',background:active?'var(--accent-tint)':'var(--step-bg)',borderRadius:'11px',padding:'13px 14px'},
+        numStyle:{fontFamily:"'IBM Plex Mono',monospace",fontSize:'11px',fontWeight:'700',color:'#fff',background:active?'var(--accent)':'var(--dot-mute)',borderRadius:'6px',padding:'3px 6px',lineHeight:'1'}};
+    });
+
+    const dot=function(tone){ const c={go:'var(--accent)',warn:'var(--warn)',crit:'var(--crit)',mute:'var(--dot-mute)'}[tone]; return {width:'9px',height:'9px',borderRadius:'50%',background:c,display:'inline-block'}; };
+
+    // INÍCIO
+    const kpis=[
+      {label:'Fotos em raw',value:'472',note:'Base monitoramento local',dot:dot('mute')},
+      {label:'Pendentes',value:'8',note:'Fila operacional atual',dot:dot('warn')},
+      {label:'Divergências',value:'1',note:'Com diferença entre fontes',dot:dot('crit')},
+      {label:'Conferidas',value:'6',note:'Resultados já revisados',dot:dot('go')}
+    ];
+    const inicioMissions=[
+      {name:'0008_CP_FSTAMON_C_FABRICA_POR-A',curral:'Curral CF-005 → CF-037',proc:'13/16',pend:'11',pill:this.pill('Em revisão','warn')},
+      {name:'0007_CP_FSTAMON_C_PASTO_SUL',curral:'Curral PS-001 → PS-020',proc:'20/20',pend:'0',pill:this.pill('Concluída','go')},
+      {name:'0006_CP_FSTALES_C_NORTE',curral:'Curral CN-001 → CN-014',proc:'14/14',pend:'0',pill:this.pill('Concluída','go')},
+      {name:'0009_CP_FSTAMON_C_LESTE',curral:'Curral CL-001 → CL-009',proc:'4/9',pend:'5',pill:this.pill('Processando','info')}
+    ];
+    const attention=[
+      {title:'12 fotos sem contexto CDZ',desc:'Divergências CDZ não conseguem cruzar fonte obrigatória.'},
+      {title:'CF-006 com diferença +71',desc:'Contagem IA 160 vs monitoramento 89 — revisar.'},
+      {title:'11 contagens pendentes',desc:'Missão 0008 aguardando aprovação humana.'}
+    ];
+
+    // CONTAGENS IA
+    const contagensStats=[
+      {label:'Na fila',value:'5',color:'var(--text)'},
+      {label:'Executando',value:'0',color:'var(--muted)'},
+      {label:'Concluído',value:'11',color:'var(--accent)'},
+      {label:'Falhou',value:'0',color:'var(--muted)'}
+    ];
+    const ca=(foto,curral,ia,iaColor,job,pill)=>({foto,curral,ia,iaColor,job,pill});
+    const contagensAudit=[
+      ca('CF-028 · DJI_...0029','Curral CF-028','132','var(--text)','#25',this.pill('Concluído','go')),
+      ca('CF-029 · DJI_...0030','Curral CF-029','129','var(--text)','#26',this.pill('Concluído','go')),
+      ca('CF-031 · DJI_...0031','Curral CF-031','69','var(--text)','#27',this.pill('Concluído','go')),
+      ca('CF-033 · DJI_...0034','Curral CF-033','119','var(--text)','#29',this.pill('Concluído','go')),
+      ca('CF-034 · DJI_...0035','Curral CF-034','—','var(--muted)','—',this.pill('Na fila','mute')),
+      ca('CF-037 · DJI_...0024','Curral CF-037','169','var(--text)','#24',this.pill('Concluído','go'))
+    ];
+
+    // REVISÃO
+    const revRows=[
+      {foto:'CF-006 · DJI_...0007',curral:'CF-006',ia:'160',monit:'89',dif:'+71',pill:this.pill('reviewed','info')},
+      {foto:'CF-033 · DJI_...0034',curral:'CF-033',ia:'119',monit:'—',dif:'—',pill:this.pill('needs_review','warn')},
+      {foto:'CF-032 · DJI_...0033',curral:'CF-032',ia:'123',monit:'—',dif:'—',pill:this.pill('needs_review','warn')},
+      {foto:'CF-031 · DJI_...0032',curral:'CF-031',ia:'69',monit:'—',dif:'—',pill:this.pill('needs_review','warn')},
+      {foto:'CF-029 · DJI_...0030',curral:'CF-029',ia:'129',monit:'—',dif:'—',pill:this.pill('needs_review','warn')}
+    ];
+
+    // DIVERGÊNCIAS
+    const divStats=[
+      {label:'Total',value:'13',color:'var(--text)'},
+      {label:'Sem CDZ',value:'1',color:'var(--crit)'},
+      {label:'Sem contexto',value:'12',color:'var(--warn-ink)'},
+      {label:'Pendentes',value:'8',color:'var(--warn-ink)'}
+    ];
+    const rb=function(sel){ return sel?'var(--warn-tint)':'var(--card)'; };
+    const divEvidencias=[
+      {foto:'CF-028 · DJI_...0029',missao:'0008 · CF-028',ia:'132',rowBg:rb(true)},
+      {foto:'CF-029 · DJI_...0030',missao:'0008 · CF-029',ia:'129',rowBg:rb(false)},
+      {foto:'CF-031 · DJI_...0032',missao:'0008 · CF-031',ia:'69',rowBg:rb(false)},
+      {foto:'CF-033 · DJI_...0034',missao:'0008 · CF-033',ia:'119',rowBg:rb(false)},
+      {foto:'CF-035 · DJI_...0036',missao:'0008 · CF-035',ia:'67',rowBg:rb(false)},
+      {foto:'CF-037 · DJI_...0024',missao:'0008 · CF-037',ia:'169',rowBg:rb(false)}
+    ];
+
+    // RESULTADOS
+    const resStats=[
+      {label:'Imagens',value:'16',color:'var(--text)'},
+      {label:'Processadas',value:'13',color:'var(--accent)'},
+      {label:'Pendentes',value:'11',color:'var(--warn-ink)'},
+      {label:'Revisadas',value:'5',color:'var(--text)'},
+      {label:'Divergências',value:'1',color:'var(--crit)'},
+      {label:'Sem contexto',value:'12',color:'var(--warn-ink)'}
+    ];
+    const resPhotos=[
+      {foto:'CF-035 · DJI_...0036',curral:'CF-035',ia:'67',sel:true},
+      {foto:'CF-033 · DJI_...0034',curral:'CF-033',ia:'119',sel:false},
+      {foto:'CF-032 · DJI_...0033',curral:'CF-032',ia:'123',sel:false},
+      {foto:'CF-031 · DJI_...0032',curral:'CF-031',ia:'69',sel:false}
+    ];
+
+    // FOTOS
+    const fotoStats=[
+      {label:'Fotos listadas',value:'16',color:'var(--text)'},
+      {label:'Com job',value:'16',color:'var(--accent)'},
+      {label:'Com resultado',value:'13',color:'var(--accent)'},
+      {label:'Não processadas',value:'0',color:'var(--muted)'}
+    ];
+    const fotoList=[
+      {file:'CF-005 · DJI_...0006_D.JPG',curral:'CF-005',pill:this.pill('Revisada','go'),rowBg:rb(true)},
+      {file:'CF-006 · DJI_...0007_D.JPG',curral:'CF-006',pill:this.pill('Processada','info'),rowBg:rb(false)},
+      {file:'CF-007 · DJI_...0008_D.JPG',curral:'CF-007',pill:this.pill('Revisada','go'),rowBg:rb(false)},
+      {file:'CF-008 · DJI_...0009_D.JPG',curral:'CF-008',pill:this.pill('Revisada','go'),rowBg:rb(false)},
+      {file:'CF-009 · DJI_...0010_D.JPG',curral:'CF-009',pill:this.pill('Revisada','go'),rowBg:rb(false)},
+      {file:'CF-028 · DJI_...0029_D.JPG',curral:'CF-028',pill:this.pill('Processada','info'),rowBg:rb(false)}
+    ];
+
+    // UPLOAD
+    const uploadStats=[
+      {label:'Limite permitido',value:'200,0 MB',color:'var(--text)'},
+      {label:'Soma selecionada',value:'0,0 MB',color:'var(--text)'},
+      {label:'Limite ultrapassado',value:'0,0 MB',color:'var(--muted)'},
+      {label:'Quantidade',value:'0 / 100',color:'var(--text)'}
+    ];
+    const uploadFiles=[
+      {file:'L-014 · DJI_20250708172113_D.JPG',size:'25,2 MB',type:'image/jpeg',pill:this.pill('Transmitida','go')},
+      {file:'L-015 · DJI_20250708172120_D.JPG',size:'24,8 MB',type:'image/jpeg',pill:this.pill('Transmitida','go')},
+      {file:'L-016 · DJI_20250708172127_D.JPG',size:'26,1 MB',type:'image/jpeg',pill:this.pill('Na fila','mute')}
+    ];
+
+    // USUÁRIOS
+    const passwordRules=[
+      {text:'Mínimo de 8 caracteres',ok:false},{text:'Ao menos uma letra maiúscula',ok:false},
+      {text:'Ao menos uma letra minúscula',ok:false},{text:'Ao menos um caractere especial',ok:false},
+      {text:'Não conter espaços',ok:true},{text:'Não conter números sequenciais',ok:true},
+      {text:'Senha e confirmação idênticas',ok:false}
+    ].map(function(r){ return {text:r.text, mark:r.ok?'✓':'○', markStyle:{color:r.ok?'var(--accent)':'var(--crit)',fontWeight:'700',marginRight:'8px'}, textStyle:{color:r.ok?'var(--ok-ink)':'var(--crit-ink)',fontSize:'12.5px'}}; });
+    const usuarios=[
+      {nome:'Lockout Test',email:'codex.lockout@finpec.local',perfil:'Analista',login:'—',pill:this.pill('Ativo','go')},
+      {nome:'Joao Kraemer',email:'joao.kraemer@finpec.com',perfil:'Administrador',login:'22/06/2026 12:53',pill:this.pill('Ativo','go')},
+      {nome:'Marina Alves',email:'marina.alves@finpec.com',perfil:'Analista',login:'21/06/2026 18:04',pill:this.pill('Ativo','go')},
+      {nome:'Carlos Dias',email:'carlos.dias@finpec.com',perfil:'Analista',login:'—',pill:this.pill('Inativo','mute')}
+    ];
+
+    const closeModal=function(){ self.setState({modal:false}); };
+    const openModal=function(){ self.setState({modal:true}); };
+
+    return {
+      rootStyle, isDark, swatches, setLight, setDark, lightBtnStyle, darkBtnStyle, switchWrapStyle,
+      prefsOpen, togglePrefs, profileBtnStyle, chevronStyle,
+      navDrones, navFoxe,
+      goInicio:this.go('inicio'), goRevisao:this.go('revisao'),
+      inicioNavStyle:this.navStyle(s==='inicio'),
+      pageCrumb:m[0], pageTitle:m[1],
+      showStepper:(activeStep>0), steps,
+      isInicio:s==='inicio', isContagens:s==='contagens', isUpload:s==='upload', isRevisao:s==='revisao', isResultados:s==='resultados', isDivergencias:s==='divergencias', isFotos:s==='fotos', isUsuarios:s==='usuarios',
+      kpis, inicioMissions, attention,
+      contagensStats, contagensAudit,
+      revRows, divStats, divEvidencias, resStats, resPhotos,
+      fotoStats, fotoList, uploadStats, uploadFiles, passwordRules, usuarios,
+      modal:this.state.modal, openModal, closeModal
+    };
+  }
+}
+</script>
+</body>
+</html>

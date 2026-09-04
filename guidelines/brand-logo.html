@@ -1,0 +1,24 @@
+<!-- @dsCard group="Brand" viewport="700x200" name="Logo Lockups" subtitle="Full stacked logotype and the horizontal sidebar lockup" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { padding: 0; }
+  .wrap { display: grid; grid-template-columns: 1fr 1fr; min-height: 200px; }
+  .light { background: var(--bg); display: grid; place-items: center; padding: 24px; }
+  .dark { background: var(--side); display: flex; align-items: center; gap: 12px; padding: 24px; }
+  .light img { height: 120px; width: auto; }
+  .dark img { height: 34px; width: auto; }
+  .word { font: var(--fw-bold) 16px/1 var(--font-display); letter-spacing: var(--ls-brand); color: #fff; }
+  .cap { position: absolute; font: 10px/1 var(--font-mono); color: var(--faint); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="light"><img src="../assets/finpec-logo-preto.png" alt="FINPEC"></div>
+    <div class="dark"><img src="../assets/finpec-mark.png" alt=""><span class="word">FINPEC</span></div>
+  </div>
+</body>
+</html>

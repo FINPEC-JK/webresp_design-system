@@ -1,0 +1,25 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Paper & Surfaces" subtitle="Warm cream canvas, white cards, recessed neutrals and borders" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { padding: 20px; }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .sw { display: flex; flex-direction: column; gap: 8px; }
+  .chip { width: 108px; height: 60px; border-radius: var(--r); border: 1px solid var(--border-strong); }
+  .nm { font: var(--fw-semibold) 12px/1 var(--font-ui); color: var(--ink); }
+  .hex { font: 11px/1 var(--font-mono); color: var(--muted); margin-top: 3px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:var(--bg)"></div><div><div class="nm">bg</div><div class="hex">#F4F2EE</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--surface)"></div><div><div class="nm">surface</div><div class="hex">#FFFFFF</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--surface-2)"></div><div><div class="nm">surface-2</div><div class="hex">#FAF9F6</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--border)"></div><div><div class="nm">border</div><div class="hex">#E7E3DB</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--border-strong)"></div><div><div class="nm">border-strong</div><div class="hex">#D7D2C7</div></div></div>
+  </div>
+</body>
+</html>

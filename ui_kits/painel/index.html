@@ -1,0 +1,72 @@
+<!-- @dsCard group="Painel do Investidor" viewport="1320x860" name="Painel — App completo" subtitle="Login → dashboard → CPRFs → nova emissão, navegável" -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>FINPEC · Painel</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  html, body { height: 100%; }
+  #root { height: 100vh; }
+  .fp-toast-host { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 80; animation: fpToastIn .26s ease both; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="painel-shared.jsx"></script>
+<script type="text/babel" src="painel-screens.jsx"></script>
+<script type="text/babel">
+const DS = window.FINPECDesignSystem_ccaa11;
+const { Sidebar, Topbar, IconButton, Button } = DS;
+
+const CRUMBS = {
+  dashboard: ["Painel", "Visão Geral"],
+  ativas: ["CPRFs", "Ativas"],
+  nova: ["CPRFs", "Nova CPRF"],
+  assinatura: ["CPRFs", "Pendentes de assinatura"],
+  b3: ["B3 & Indicadores", "Acompanhamento B3"],
+  boi: ["B3 & Indicadores", "Boi Gordo"],
+  clientes: ["Gestão", "Clientes"],
+  filiais: ["Gestão", "Filiais"],
+  documentos: ["Gestão", "Documentos"],
+};
+const TITLES = { assinatura: "Pendentes de assinatura", b3: "Acompanhamento B3", boi: "Boi Gordo", clientes: "Clientes", filiais: "Filiais", documentos: "Documentos" };
+
+function App() {
+  const [authed, setAuthed] = React.useState(false);
+  const [screen, setScreen] = React.useState("dashboard");
+  const [collapsed, setCollapsed] = React.useState(false);
+  const [toast, setToast] = React.useState(null);
+  const fire = (msg) => { setToast(msg); clearTimeout(window.__t); window.__t = setTimeout(() => setToast(null), 2600); };
+
+  if (!authed) return <Login onEnter={() => setAuthed(true)} />;
+
+  let body;
+  if (screen === "dashboard") body = <Dashboard toast={fire} />;
+  else if (screen === "ativas") body = <CprfList toast={fire} />;
+  else if (screen === "nova") body = <NewCprf toast={fire} />;
+  else body = <Placeholder title={TITLES[screen] || "Painel"} />;
+
+  return (
+    <div className={"fp-app" + (collapsed ? " collapsed" : "")}>
+      <Sidebar variant="white" logoSrc="../../assets/finpec-mark.png" activeId={screen} onNavigate={setScreen} user={PAINEL.user} groups={PAINEL.nav} collapsed={collapsed} onToggleCollapse={() => setCollapsed((c) => !c)} />
+      <div className="fp-main">
+        <Topbar crumbs={CRUMBS[screen] || ["Painel"]}
+          actions={<>
+            <IconButton aria-label="Notificações">{Icons.bell()}</IconButton>
+            <Button variant="primary" size="sm" icon={Icons.plus()} onClick={() => setScreen("nova")}>Nova CPRF</Button>
+          </>} />
+        <div className="fp-content"><div className="fp-content-inner">{body}</div></div>
+      </div>
+      {toast && <div className="fp-toast-host"><div className="fp-toast ok"><span className="ic">{Icons.check({ size: 16 })}</span>{toast}</div></div>}
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

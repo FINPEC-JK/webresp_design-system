@@ -1,0 +1,28 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Dark Chrome" subtitle="The sidebar / login palette — warm near-black with orange marks" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { padding: 0; }
+  .panel { background: var(--side); padding: 20px; min-height: 150px; }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .sw { display: flex; flex-direction: column; gap: 8px; }
+  .chip { width: 100px; height: 54px; border-radius: var(--r); border: 1px solid var(--side-border); }
+  .nm { font: var(--fw-semibold) 12px/1 var(--font-ui); color: #EDE8DE; }
+  .hex { font: 11px/1 var(--font-mono); color: var(--side-text-dim); margin-top: 3px; }
+</style>
+</head>
+<body>
+  <div class="panel">
+    <div class="row">
+      <div class="sw"><div class="chip" style="background:var(--side)"></div><div><div class="nm">side</div><div class="hex">#181612</div></div></div>
+      <div class="sw"><div class="chip" style="background:var(--side-2)"></div><div><div class="nm">side-2</div><div class="hex">#211E18</div></div></div>
+      <div class="sw"><div class="chip" style="background:var(--side-active-bg)"></div><div><div class="nm">active</div><div class="hex">#2D2920</div></div></div>
+      <div class="sw"><div class="chip" style="background:var(--side-text)"></div><div><div class="nm">text</div><div class="hex">#B7B1A4</div></div></div>
+      <div class="sw"><div class="chip" style="background:var(--accent)"></div><div><div class="nm">accent mark</div><div class="hex">#DC4E25</div></div></div>
+    </div>
+  </div>
+</body>
+</html>

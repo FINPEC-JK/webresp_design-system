@@ -1,0 +1,51 @@
+<!-- @dsCard group="Components" viewport="900x620" name="Media — Thumbnails, Viewer, Lightbox" subtitle="Thumbnail grid, pan/zoom viewer with bounding boxes, fullscreen lightbox" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style> body { padding: 22px; } .stack { display:flex; flex-direction:column; gap:18px; } .note { font: 12px/1.4 var(--font-ui); color: var(--muted); } </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { ImageThumb, ImageThumbGrid, ImageViewer, Lightbox, Card } = window.FINPECDesignSystem_ccaa11;
+const PH = (seed,c) => `https://picsum.photos/seed/${seed}/640/480`;
+const photos = [
+  { id: "CF-028", url: PH("cf028"), curral: "Curral CF-028", badge: "Concluído", tone: "ok" },
+  { id: "CF-033", url: PH("cf033"), curral: "Curral CF-033", badge: "needs_review", tone: "warn" },
+  { id: "CF-006", url: PH("cf006"), curral: "Curral CF-006", badge: "Divergência", tone: "danger" },
+  { id: "CF-037", url: PH("cf037"), curral: "Curral CF-037", badge: "Concluído", tone: "ok" },
+];
+function Demo() {
+  const [active, setActive] = React.useState(null);
+  const idx = active ? photos.findIndex(p => p.id === active.id) : -1;
+  const go = (d) => setActive(photos[(idx + d + photos.length) % photos.length]);
+  return (
+    <div className="stack">
+      <div className="note">Thumbnails · clique para abrir no lightbox</div>
+      <ImageThumbGrid>
+        {photos.map(p => (
+          <ImageThumb key={p.id} src={p.url} caption={p.curral} sub={p.id} badge={p.badge} badgeTone={p.tone} onClick={() => setActive(p)} />
+        ))}
+        <ImageThumb loading />
+      </ImageThumbGrid>
+      <div className="note">Viewer embutido (zoom com a roda do mouse, arraste para mover)</div>
+      <Card bodyless><ImageViewer src={PH("viewerdemo")} height={320} badge="Concluído" badgeTone="ok"
+        boxes={[{x:18,y:14,w:16,h:24,label:"0.97"},{x:46,y:40,w:13,h:20},{x:64,y:16,w:14,h:22,label:"0.94"}]} /></Card>
+      {active && (
+        <Lightbox src={active.url} title={active.curral} sub={active.id} badge={active.badge} badgeTone={active.tone}
+          boxes={[{x:20,y:12,w:14,h:22,label:"0.98"},{x:44,y:38,w:12,h:20}]}
+          onClose={() => setActive(null)} onPrev={() => go(-1)} onNext={() => go(1)} />
+      )}
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<Demo/>);
+</script>
+</body>
+</html>
