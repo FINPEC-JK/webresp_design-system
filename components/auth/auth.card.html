@@ -1,0 +1,38 @@
+<!-- @dsCard group="Components" viewport="1280x800" name="Auth — LoginScreen" subtitle="Login padrão: SSO, usuário+senha ou ambos · release notes" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>html,body{margin:0;height:100%}#root{height:100vh}</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { LoginScreen } = window.FINPECDesignSystem_f2149b;
+function Demo() {
+  const [m, setM] = React.useState("sso");
+  return (
+    <div style={{ position: "relative", height: "100%" }}>
+      <LoginScreen key={m} methods={m}
+        logoSrc="../../assets/finpec-logo-branco.png"
+        systemName="FOXEN-AI" systemTagline="Flying Oxen - Artificial Intelligence"
+        title="Deep & Machine Learning Neural Engine - Cattle Counter"
+        description="Plataforma de aprendizado de máquina e treinamento de redes neurais profundas para contagem de gado e isolamento de perímetro em imagens aéreas capturadas por drones."
+        imageSrc="../../assets/login-foxe-aerial.png" release="0.2.0113" />
+      <div style={{ position: "absolute", right: 20, bottom: 20, display: "flex", gap: 4, padding: 4, background: "rgba(15,15,14,.82)", borderRadius: 8 }}>
+        {[["sso","SSO"],["password","Usuário + Senha"],["both","Ambos"]].map(([k,l]) => (
+          <button key={k} onClick={() => setM(k)} style={{ border: 0, borderRadius: 6, padding: "8px 12px", cursor: "pointer", font: "500 12px/1 var(--font-ui)", background: m === k ? "#fff" : "transparent", color: m === k ? "#1B1A17" : "#D8D4CC" }}>{l}</button>
+        ))}
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<Demo/>);
+</script>
+</body>
+</html>

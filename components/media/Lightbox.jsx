@@ -6,7 +6,7 @@ import React from "react";
  * Closes on scrim click, the close button, or Escape.
  */
 export function Lightbox({ src, title = null, sub = null, boxes = [], badge = null, badgeTone = "info", onClose, onPrev = null, onNext = null }) {
-  const ImageViewer = (typeof window !== "undefined" && window.FINPECDesignSystem_ccaa11 && window.FINPECDesignSystem_ccaa11.ImageViewer) || (() => null);
+  const ImageViewer = (typeof window !== "undefined" && window.FINPECDesignSystem_f2149b && window.FINPECDesignSystem_f2149b.ImageViewer) || (() => null);
   React.useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") onClose && onClose();

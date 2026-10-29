@@ -14,6 +14,10 @@ export interface NavItem {
   hot?: boolean;
   /** Show a small status dot instead of a count (when no badge). */
   dot?: boolean;
+  /** Sub-items. When present the item becomes an expandable/collapsible parent (click toggles; no navigation). Auto-expands when it contains the active item. Use for ALL settings: e.g. "Configurações" → Cadastros, Criação de acessos, Perfis. */
+  children?: NavItem[];
+  /** Start expanded. @default false */
+  defaultExpanded?: boolean;
 }
 
 export interface NavGroup {
@@ -29,7 +33,8 @@ export interface SidebarUser {
 }
 
 /**
- * Dark application sidebar with grouped navigation and user footer.
+ * Application sidebar with grouped navigation and a footer holding: light/dark
+ * toggle + date/time, user avatar (initials) + name + profile + logout, and the release code.
  */
 export interface SidebarProps {
   /** Wordmark text. @default "FINPEC" */
@@ -48,6 +53,16 @@ export interface SidebarProps {
   onToggleCollapse?: () => void;
   /** Surface treatment — dark warm chrome, light paper, or bright white (blue-forward). @default "dark" */
   variant?: "dark" | "light" | "white";
+  /** Current app theme. Only two modes exist: "light" | "dark" (no "system"). Drives the toggle icon (sun = light, moon = dark). */
+  theme?: "light" | "dark" | null;
+  /** Theme toggle handler. When provided, the light/dark button renders in the footer. */
+  onToggleTheme?: () => void;
+  /** Logout handler. When provided (and `user` is set), the "Sair" button renders beside the user. */
+  onLogout?: () => void;
+  /** Show live date + time in the footer ("28 de out. de 2026 · 23:47"). @default true */
+  showClock?: boolean;
+  /** Release / version code shown at the foot, mono, e.g. "0.2.0022". */
+  release?: string | null;
   className?: string;
 }
 

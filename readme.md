@@ -19,9 +19,9 @@ Este design system é uma **mescla das duas linguagens**, agora **unificadas** s
 
 ### Fontes fornecidas (guarde, mesmo que o leitor não tenha acesso)
 
-- **Repositório GitHub:** `FINPEC-JK/web-webresp_gen_des_system` (branch `main`)
-  → https://github.com/FINPEC-JK/web-webresp_gen_des_system
-  **No momento da criação o repositório estava vazio (sem commits).** Vale revisitar: à medida que ele for populado, dá para extrair tokens/componentes reais e refinar este sistema. Outros repos da org observados: `FINPEC-JK/foxe_ai`.
+- **Repositório GitHub (fonte deste projeto):** `FINPEC-JK/webresp_design-system` (branch `main`)
+  → https://github.com/FINPEC-JK/webresp_design-system
+  Este projeto foi importado desse repositório (tokens, componentes, guidelines, UI kits, template). Repos relacionados da org: `FINPEC-JK/web-webresp_gen_des_system`, `FINPEC-JK/foxe_ai`.
 - **Uploads:** logotipos (`FINPEC - LOGOTIPO.png`, `LOGO FINPEC - PRETO.png`, `LOGO FINPEC MONOGRAMA.png`), paleta em PDF (`FINPEC - LOGOTIPO TODAS AS CORES.pdf`), foto de jornada (`finpec_640_whatsapp copy.jpg`), e os dois redesigns acima.
 
 > **Recomendação ao leitor:** explore o repositório GitHub e os dois arquivos de redesign para reproduzir interfaces FINPEC com maior fidelidade. Eles são a fonte-verdade desta linguagem.
@@ -109,6 +109,31 @@ Superfície branca, borda hairline `1px var(--border)`, raio 14px, `--shadow-sm`
 
 ---
 
+### Configurações e submenus (menu lateral)
+- **Tudo o que for configuração** — cadastros, criação de acessos, perfis/permissões, parâmetros, integrações etc. — fica como **subitem dentro de um item do menu lateral esquerdo** (ex.: "Configurações" → Cadastros, Criação de acessos, Perfis e permissões). Nunca no rodapé do menu.
+- Sempre que vários itens forem aglutinados sob um item, ele é **expansível/retrátil**: clique no item alterna abrir/fechar (chevron gira 90°), sem navegar. Abre automaticamente quando contém a tela ativa. Subitens: sem ícone, 13px, recuados, com linha-guia vertical. Pode haver mais de um nível (Cadastros → Clientes, Filiais).
+- Implementado em `Sidebar` via `children` (e `defaultExpanded`) em cada `NavItem`.
+
+### Tela de Login (padrão para todos os sistemas)
+Referência: `uploads/CleanShot 2026-10-28 at 23.54.07.png`, `…23.55.30.png`, `…23.55.39.png` (FOXEN-AI).
+
+- **Layout em 2 colunas, altura total:** painel esquerdo escuro fixo (~500px, quase-preto `#0F0F0E`) + imagem full-bleed à direita (foto aérea real do produto, sem overlay).
+- **Painel esquerdo, de cima para baixo:**
+  1. Lockup: marca FINPEC (logo branco) + nome do sistema ("FOXEN-AI") com o subtítulo em maiúsculas ("FLYING OXEN - ARTIFICIAL INTELLIGENCE").
+  2. Título grande (display, ~38px, branco) — ex.: "Deep & Machine Learning Neural Engine - Cattle Counter".
+  3. Descrição curta (~16px, cinza claro), 3–4 linhas.
+  4. Bloco de acesso: "Acesse sua conta" (~26px) + linha de apoio (~13px).
+  5. **Métodos de login configuráveis:** `SSO` (botão branco "Entrar com Microsoft", logo Microsoft, largura total, ~68px de altura), `Usuário + Senha` (campos + botão Entrar), ou **ambos** (SSO acima, divisor "ou", depois o formulário).
+  6. Nota de rodapé (~12px): ex. "O reset de senha é feito pelo botão acima" (apenas SSO).
+- **Aba "Release notes":** aba vertical presa à borda esquerda da imagem, fundo branco, borda azul (`--primary`), texto azul girado 90° "0.2.0113 Release notes" + chevron. Ao clicar, expande para um painel branco arredondado "Release notes — Build 0.2.0113" com seções recolhíveis (`<details>`): Correções de validação, Evolução da plataforma, Requisitos funcionais, Requisitos não funcionais. A aba continua à direita do painel com o chevron invertido para fechar.
+- **Componente:** `LoginScreen` (`components/auth/`) — `methods="sso" | "password" | "both"`. Logo branco em `assets/finpec-logo-branco.png` (gerado a partir do logo preto); imagem aérea do FOXEN-AI em `assets/login-foxe-aerial.png` (recortada do print de referência).
+
+### Temas
+Somente **dois modos: Claro e Escuro**. Não existe a opção "Sistema" (seguir o SO) — o usuário alterna manualmente pelo botão sol/lua no rodapé do menu lateral.
+
+### Rodapé do menu lateral (padrão para todos os sistemas)
+De cima para baixo: botão **claro/escuro** + **data e hora** ("28 de out. de 2026 · 23:47") → **bola com iniciais**, nome e perfil + botão **Sair** → **código do release** em mono ("0.2.0022", sem sufixos tipo "· RE-0006"). Implementado em `Sidebar` via `theme`, `onToggleTheme`, `onLogout`, `showClock`, `release`.
+
 ## 4 · Iconografia (Iconography)
 
 - **Sistema:** ícones de linha estilo **Lucide** — traço de ~1,9px, cantos arredondados (`stroke-linecap/linejoin: round`), grade 24px, renderizados a 18–20px na UI e 15–16px em ações de linha. **Cor padrão de ícone é o azul primário (`--primary`)** sempre que houver ênfase interativa; em contextos neutros herdam `currentColor` (tom do texto). Reserve laranja/vermelho no ícone apenas para marca e alerta.
@@ -130,7 +155,7 @@ Superfície branca, borda hairline `1px var(--border)`, raio 14px, `--shadow-sm`
 **`tokens/`** — custom properties por concern, todas alcançadas via `styles.css`:
 `fonts.css` (webfonts), `colors.css`, `typography.css`, `spacing.css` (espaçamento + radii + sombras + dims do shell), `base.css` (reset).
 
-**`components/`** — primitivos React (`export function Name`), com `.d.ts`, `.prompt.md` e um card por pasta. Namespace de runtime: `window.FINPECDesignSystem_ccaa11`.
+**`components/`** — primitivos React (`export function Name`), com `.d.ts`, `.prompt.md` e um card por pasta. Namespace de runtime: `window.FINPECDesignSystem_f2149b`.
 - `core/` — **Button**, **IconButton**, **Card**, **Pill**, **Tag**, **Avatar**
 - `forms/` — **Field**, **Input**, **Select**, **Checkbox**, **RadioCard**, **MoneyInput** (máscara valor/percentual)
 - `data/` — **KpiCard** (com `prefix` monetário; tom padrão azul `primary`), **DataTable**, **BarChart** (azul), **Pager**
@@ -143,17 +168,22 @@ Superfície branca, borda hairline `1px var(--border)`, raio 14px, `--shadow-sm`
 
 **`ui_kits/`** — recriações navegáveis dos produtos:
 - `painel/` — **Painel do Investidor/Admin**: `index.html` (app completo: login → dashboard → CPRFs → nova emissão), `painel-shared.jsx` (ícones + dados mock), `painel-screens.jsx` (telas).
-- _FOXE IA — planejado, ainda não construído._
+- `foxe/` — **FOXEN-AI**: `index.html` (Início, Contagens IA, Revisão, Usuários; tema claro/escuro + accents), `foxe-theme.js`, `foxe-shared.jsx`, `foxe-screens.jsx`.
+- `painel/menu-opcoes.html` — as três variantes de Sidebar lado a lado.
 
-**`assets/`** — `finpec-mark.png` (monograma), `finpec-logo.png`, `finpec-logo-preto.png`, `finpec-jornada-credito.jpg`.
+**`templates/painel-dashboard/`** — template DC copiável do dashboard do Painel.
+
+**`assets/`** — `finpec-mark.png` (monograma), `finpec-logo.png`, `finpec-logo-preto.png` (fundos claros), `finpec-logo-branco.png` (fundos pretos/escuros), `finpec-jornada-credito.jpg`, `login-foxe-aerial.png`.
 
 ---
 
 ## 6 · Como usar
 
 1. Linke `styles.css` — tokens, fontes, reset e a camada `.fp-*` vêm juntos.
-2. Carregue `_ds_bundle.js` e leia os componentes de `window.FINPECDesignSystem_ccaa11`.
+2. Carregue `_ds_bundle.js` e leia os componentes de `window.FINPECDesignSystem_f2149b`.
 3. Componha telas com os primitivos (não reimplemente Button/Card dentro de uma tela). Veja `ui_kits/painel/` como referência de composição.
 4. Ícones: copie os helpers `Icons.*` de `painel-shared.jsx` ou use SVGs Lucide com traço 1,9px.
+
+> **Explore o repositório** https://github.com/FINPEC-JK/webresp_design-system (e o arquivo `uploads/Foxe IA - Redesign.dc.html`) para recriar telas FINPEC com mais fidelidade.
 
 > **Substituições sinalizadas:** (a) fontes carregadas via Google Fonts (Schibsted Grotesk / Hanken Grotesk / IBM Plex Mono) — se a FINPEC tiver arquivos próprios, troque em `tokens/fonts.css`; (b) ícones Lucide no lugar de um set proprietário inexistente no repo.

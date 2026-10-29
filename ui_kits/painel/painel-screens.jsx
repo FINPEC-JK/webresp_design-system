@@ -1,41 +1,19 @@
 // FINPEC Painel — product screens. Recreations of the real investor/admin
 // views, composed from the design-system components on the global namespace.
 
-const DS = window.FINPECDesignSystem_ccaa11;
+const DS = window.FINPECDesignSystem_f2149b;
 const { Button, IconButton, Card, Pill, Tag, Avatar, KpiCard, DataTable, BarChart, Pager, Field, Input, Select, Checkbox, RadioCard, EmptyState, MoneyInput } = DS;
 
 /* ---------------- Login ---------------- */
 function Login({ onEnter }) {
-  const [keep, setKeep] = React.useState(true);
   return (
-    <div className="login-wrap" style={{ display: "grid", gridTemplateColumns: "1fr 1.05fr", height: "100%", background: "var(--surface)" }}>
-      <div style={{ display: "grid", placeItems: "center", padding: 40 }}>
-        <div style={{ width: "100%", maxWidth: 372 }} className="fp-fade-in">
-          <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 36 }}>
-            <img src="../../assets/finpec-mark.png" alt="" style={{ height: 38 }} />
-            <span style={{ font: "var(--fw-bold) 20px/1 var(--font-display)", letterSpacing: "var(--ls-brand)", color: "var(--ink)" }}>FINPEC</span>
-          </div>
-          <h1 style={{ font: "var(--fw-bold) 26px/1.1 var(--font-display)", letterSpacing: "-0.01em", color: "var(--ink)", margin: "0 0 6px" }}>Painel Administrativo</h1>
-          <p style={{ color: "var(--muted)", fontSize: 14, margin: "0 0 28px" }}>Acesse a operação de crédito rural.</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            <Field label="E-mail"><Input type="email" defaultValue="joao.kraemer@finpec.com" /></Field>
-            <Field label="Senha"><Input type="password" defaultValue="senha-segura" /></Field>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <Checkbox checked={keep} onChange={(e) => setKeep(e.target.checked)}>Manter conectado</Checkbox>
-              <a className="link" style={{ color: "var(--accent)", fontWeight: 600, fontSize: 13, textDecoration: "none" }}>Esqueci a senha</a>
-            </div>
-            <Button variant="primary" block size="lg" onClick={onEnter}>Entrar no painel</Button>
-          </div>
-        </div>
-      </div>
-      <div style={{ background: "var(--side)", position: "relative", overflow: "hidden", display: "grid", placeItems: "center" }}>
-        <div style={{ textAlign: "center" }}>
-          <img src="../../assets/finpec-mark.png" alt="" style={{ height: 96, opacity: 0.96 }} />
-          <div style={{ font: "var(--fw-bold) 30px/1 var(--font-display)", letterSpacing: "var(--ls-brand)", color: "#fff", marginTop: 22 }}>FINPEC</div>
-          <div style={{ color: "var(--side-text-dim)", fontSize: 14, marginTop: 12, maxWidth: 320, lineHeight: 1.5 }}>Crédito rural com lastro em CPR, integrado à B3 e aos indicadores do agronegócio.</div>
-        </div>
-      </div>
-    </div>
+    <DS.LoginScreen methods="both"
+      logoSrc="../../assets/finpec-logo-branco.png"
+      systemName="Painel" systemTagline="Investidor · Administrativo"
+      title="Crédito rural com lastro em CPR"
+      description="Emissão e gestão de CPRFs, integração com a B3 e acompanhamento dos indicadores do agronegócio."
+      imageSrc="../../assets/finpec-jornada-credito.jpg" release="0.2.0022"
+      onSso={onEnter} onSubmit={onEnter} />
   );
 }
 
