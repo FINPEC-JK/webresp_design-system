@@ -1,12 +1,393 @@
-/* @ds-bundle: {"format":4,"namespace":"FINPECDesignSystem_ccaa11","components":[{"name":"Avatar","sourcePath":"components/core/Avatar.jsx"},{"name":"Button","sourcePath":"components/core/Button.jsx"},{"name":"Card","sourcePath":"components/core/Card.jsx"},{"name":"IconButton","sourcePath":"components/core/IconButton.jsx"},{"name":"Pill","sourcePath":"components/core/Pill.jsx"},{"name":"Tag","sourcePath":"components/core/Tag.jsx"},{"name":"BarChart","sourcePath":"components/data/BarChart.jsx"},{"name":"DataTable","sourcePath":"components/data/DataTable.jsx"},{"name":"KpiCard","sourcePath":"components/data/KpiCard.jsx"},{"name":"Pager","sourcePath":"components/data/Pager.jsx"},{"name":"EmptyState","sourcePath":"components/feedback/EmptyState.jsx"},{"name":"Toast","sourcePath":"components/feedback/Toast.jsx"},{"name":"Checkbox","sourcePath":"components/forms/Checkbox.jsx"},{"name":"Field","sourcePath":"components/forms/Field.jsx"},{"name":"Input","sourcePath":"components/forms/Input.jsx"},{"name":"MoneyInput","sourcePath":"components/forms/MoneyInput.jsx"},{"name":"RadioCard","sourcePath":"components/forms/RadioCard.jsx"},{"name":"Select","sourcePath":"components/forms/Select.jsx"},{"name":"ImageThumb","sourcePath":"components/media/ImageThumb.jsx"},{"name":"ImageThumbGrid","sourcePath":"components/media/ImageThumb.jsx"},{"name":"ImageViewer","sourcePath":"components/media/ImageViewer.jsx"},{"name":"Lightbox","sourcePath":"components/media/Lightbox.jsx"},{"name":"Sidebar","sourcePath":"components/navigation/Sidebar.jsx"},{"name":"Topbar","sourcePath":"components/navigation/Topbar.jsx"}],"sourceHashes":{"components/core/Avatar.jsx":"37e32c6408f3","components/core/Button.jsx":"e18bb32d0816","components/core/Card.jsx":"4e8c06227cc4","components/core/IconButton.jsx":"c7431158e454","components/core/Pill.jsx":"c33bf4572ec4","components/core/Tag.jsx":"e52911dcf5a3","components/data/BarChart.jsx":"a8623b2b821d","components/data/DataTable.jsx":"84fbfeb08f9d","components/data/KpiCard.jsx":"0602ed27fdcb","components/data/Pager.jsx":"abf8ca799c6c","components/feedback/EmptyState.jsx":"8b4068fd2f5a","components/feedback/Toast.jsx":"f945769da87f","components/forms/Checkbox.jsx":"c50358627dc6","components/forms/Field.jsx":"dcc77703c052","components/forms/Input.jsx":"1c43b63b3a19","components/forms/MoneyInput.jsx":"cfd8c0a75f72","components/forms/RadioCard.jsx":"4a5143f7b283","components/forms/Select.jsx":"190fb3a0c176","components/media/ImageThumb.jsx":"0558ae76d3ff","components/media/ImageViewer.jsx":"3ce4d08956dd","components/media/Lightbox.jsx":"833cf354128c","components/navigation/Sidebar.jsx":"3d22f24f8f39","components/navigation/Topbar.jsx":"3c1edf46da7c","ui_kits/foxe/foxe-screens.jsx":"6d5a3afab981","ui_kits/foxe/foxe-shared.jsx":"4393e48f6ff3","ui_kits/foxe/foxe-theme.js":"515853121052","ui_kits/painel/painel-screens.jsx":"433f1f0ae4ea","ui_kits/painel/painel-shared.jsx":"1e027caba876"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":4,"namespace":"FINPECDesignSystem_f2149b","components":[{"name":"LoginScreen","sourcePath":"components/auth/LoginScreen.jsx"},{"name":"Avatar","sourcePath":"components/core/Avatar.jsx"},{"name":"Button","sourcePath":"components/core/Button.jsx"},{"name":"Card","sourcePath":"components/core/Card.jsx"},{"name":"IconButton","sourcePath":"components/core/IconButton.jsx"},{"name":"Pill","sourcePath":"components/core/Pill.jsx"},{"name":"Tag","sourcePath":"components/core/Tag.jsx"},{"name":"BarChart","sourcePath":"components/data/BarChart.jsx"},{"name":"DataTable","sourcePath":"components/data/DataTable.jsx"},{"name":"KpiCard","sourcePath":"components/data/KpiCard.jsx"},{"name":"Pager","sourcePath":"components/data/Pager.jsx"},{"name":"EmptyState","sourcePath":"components/feedback/EmptyState.jsx"},{"name":"Toast","sourcePath":"components/feedback/Toast.jsx"},{"name":"Checkbox","sourcePath":"components/forms/Checkbox.jsx"},{"name":"Field","sourcePath":"components/forms/Field.jsx"},{"name":"Input","sourcePath":"components/forms/Input.jsx"},{"name":"MoneyInput","sourcePath":"components/forms/MoneyInput.jsx"},{"name":"RadioCard","sourcePath":"components/forms/RadioCard.jsx"},{"name":"Select","sourcePath":"components/forms/Select.jsx"},{"name":"ImageThumb","sourcePath":"components/media/ImageThumb.jsx"},{"name":"ImageThumbGrid","sourcePath":"components/media/ImageThumb.jsx"},{"name":"ImageViewer","sourcePath":"components/media/ImageViewer.jsx"},{"name":"Lightbox","sourcePath":"components/media/Lightbox.jsx"},{"name":"Sidebar","sourcePath":"components/navigation/Sidebar.jsx"},{"name":"Topbar","sourcePath":"components/navigation/Topbar.jsx"}],"sourceHashes":{"components/auth/LoginScreen.jsx":"034fa29b1006","components/core/Avatar.jsx":"37e32c6408f3","components/core/Button.jsx":"e18bb32d0816","components/core/Card.jsx":"4e8c06227cc4","components/core/IconButton.jsx":"c7431158e454","components/core/Pill.jsx":"c33bf4572ec4","components/core/Tag.jsx":"e52911dcf5a3","components/data/BarChart.jsx":"a8623b2b821d","components/data/DataTable.jsx":"84fbfeb08f9d","components/data/KpiCard.jsx":"0602ed27fdcb","components/data/Pager.jsx":"abf8ca799c6c","components/feedback/EmptyState.jsx":"8b4068fd2f5a","components/feedback/Toast.jsx":"f945769da87f","components/forms/Checkbox.jsx":"c50358627dc6","components/forms/Field.jsx":"dcc77703c052","components/forms/Input.jsx":"1c43b63b3a19","components/forms/MoneyInput.jsx":"cfd8c0a75f72","components/forms/RadioCard.jsx":"4a5143f7b283","components/forms/Select.jsx":"190fb3a0c176","components/media/ImageThumb.jsx":"0558ae76d3ff","components/media/ImageViewer.jsx":"3ce4d08956dd","components/media/Lightbox.jsx":"f8d143778682","components/navigation/Sidebar.jsx":"2b10732d8ace","components/navigation/Topbar.jsx":"3c1edf46da7c","ui_kits/foxe/foxe-screens.jsx":"6d5a3afab981","ui_kits/foxe/foxe-shared.jsx":"4393e48f6ff3","ui_kits/foxe/foxe-theme.js":"515853121052","ui_kits/painel/painel-screens.jsx":"aeb98f4f0db5","ui_kits/painel/painel-shared.jsx":"1e027caba876"},"inlinedExternals":[],"unexposedExports":[]} */
 
 (() => {
 
-const __ds_ns = (window.FINPECDesignSystem_ccaa11 = window.FINPECDesignSystem_ccaa11 || {});
+const __ds_ns = (window.FINPECDesignSystem_f2149b = window.FINPECDesignSystem_f2149b || {});
 
 const __ds_scope = {};
 
 (__ds_ns.__errors = __ds_ns.__errors || []);
+
+// components/auth/LoginScreen.jsx
+try { (() => {
+const DEFAULT_NOTES = [{
+  title: "Correções de validação",
+  items: []
+}, {
+  title: "Evolução da plataforma",
+  items: []
+}, {
+  title: "Requisitos funcionais",
+  items: []
+}, {
+  title: "Requisitos não funcionais",
+  items: []
+}];
+function MsLogo() {
+  const sq = bg => /*#__PURE__*/React.createElement("span", {
+    style: {
+      width: 12,
+      height: 12,
+      background: bg,
+      display: "block"
+    }
+  });
+  return /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true",
+    style: {
+      display: "grid",
+      gridTemplateColumns: "12px 12px",
+      gap: 2
+    }
+  }, sq("#F25022"), sq("#7FBA00"), sq("#00A4EF"), sq("#FFB900"));
+}
+function Chevron({
+  open
+}) {
+  return /*#__PURE__*/React.createElement("svg", {
+    width: "16",
+    height: "16",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: open ? "m15 6-6 6 6 6" : "m9 6 6 6-6 6"
+  }));
+}
+
+/**
+ * Standard FINPEC login screen (all systems): dark left panel with brand
+ * lockup, title, description and the access block (SSO, user+password or
+ * both) + full-bleed product image on the right with an expandable vertical
+ * "Release notes" tab.
+ */
+function LoginScreen({
+  logoSrc = "",
+  systemName = "",
+  systemTagline = "",
+  title = "",
+  description = "",
+  heading = "Acesse sua conta",
+  subheading = null,
+  methods = "sso",
+  ssoLabel = "Entrar com Microsoft",
+  onSso,
+  onSubmit,
+  forgotLabel = "Esqueci a senha",
+  onForgot,
+  footnote = null,
+  imageSrc = "",
+  release = null,
+  releaseNotes = DEFAULT_NOTES,
+  defaultReleaseOpen = false,
+  className = ""
+}) {
+  const [open, setOpen] = React.useState(defaultReleaseOpen);
+  const [user, setUser] = React.useState("");
+  const [pass, setPass] = React.useState("");
+  const showSso = methods === "sso" || methods === "both";
+  const showPwd = methods === "password" || methods === "both";
+  const sub = subheading != null ? subheading : methods === "sso" ? "Use sua conta corporativa Microsoft para acessar a plataforma." : methods === "password" ? "Informe seu usuário e senha para acessar a plataforma." : "Use sua conta corporativa Microsoft ou seu usuário e senha.";
+  const note = footnote != null ? footnote : methods === "sso" ? "O reset de senha é feito pelo botão acima" : null;
+  const inputS = {
+    width: "100%",
+    boxSizing: "border-box",
+    height: 48,
+    padding: "0 14px",
+    background: "#1A1917",
+    border: "1px solid #34322D",
+    borderRadius: 6,
+    color: "#F2EFE9",
+    font: "400 15px/1 var(--font-ui)",
+    outline: "none"
+  };
+  const labelS = {
+    display: "block",
+    font: "500 13px/1 var(--font-ui)",
+    color: "#BDB8AE",
+    marginBottom: 8
+  };
+  const bg = imageSrc ? "#3a3128 url(\"" + imageSrc + "\") center/cover no-repeat" : "#3a3128";
+  return /*#__PURE__*/React.createElement("div", {
+    className: className,
+    style: {
+      display: "grid",
+      gridTemplateColumns: "500px minmax(0,1fr)",
+      height: "100%",
+      minHeight: 640,
+      background: "#0F0F0E"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#0F0F0E",
+      color: "#fff",
+      padding: "112px 40px 48px",
+      display: "flex",
+      flexDirection: "column",
+      overflowY: "auto",
+      boxSizing: "border-box"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 22
+    }
+  }, logoSrc ? /*#__PURE__*/React.createElement("img", {
+    src: logoSrc,
+    alt: "FINPEC",
+    style: {
+      width: 104,
+      height: "auto",
+      flex: "none"
+    }
+  }) : /*#__PURE__*/React.createElement("span", {
+    style: {
+      font: "var(--fw-bold) 20px/1 var(--font-display)",
+      letterSpacing: "var(--ls-brand)"
+    }
+  }, "FINPEC"), (systemName || systemTagline) && /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: 0
+    }
+  }, systemName && /*#__PURE__*/React.createElement("div", {
+    style: {
+      font: "500 26px/1.1 var(--font-display)",
+      color: "#fff"
+    }
+  }, systemName), systemTagline && /*#__PURE__*/React.createElement("div", {
+    style: {
+      font: "400 13px/1.3 var(--font-ui)",
+      color: "#C9C5BD",
+      textTransform: "uppercase",
+      marginTop: 12
+    }
+  }, systemTagline))), title && /*#__PURE__*/React.createElement("h1", {
+    style: {
+      font: "400 38px/1.2 var(--font-display)",
+      letterSpacing: "-0.01em",
+      color: "#fff",
+      margin: "56px 0 0",
+      textWrap: "pretty"
+    }
+  }, title), description && /*#__PURE__*/React.createElement("p", {
+    style: {
+      font: "400 16px/1.5 var(--font-ui)",
+      color: "#C9C5BD",
+      margin: "52px 0 0",
+      textWrap: "pretty"
+    }
+  }, description), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: "auto",
+      paddingTop: 64
+    }
+  }, /*#__PURE__*/React.createElement("h2", {
+    style: {
+      font: "400 26px/1.2 var(--font-display)",
+      color: "#fff",
+      margin: 0
+    }
+  }, heading), /*#__PURE__*/React.createElement("p", {
+    style: {
+      font: "400 13px/1.45 var(--font-ui)",
+      color: "#C9C5BD",
+      margin: "14px 0 26px"
+    }
+  }, sub), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: 16
+    }
+  }, showSso && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: onSso,
+    style: {
+      height: 68,
+      width: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 12,
+      background: "#fff",
+      color: "#1B1A17",
+      border: "1px solid #D9D6CF",
+      borderRadius: 4,
+      font: "500 15px/1 var(--font-ui)",
+      cursor: "pointer"
+    }
+  }, /*#__PURE__*/React.createElement(MsLogo, null), ssoLabel), methods === "both" && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 12,
+      color: "#8C877D",
+      font: "500 12px/1 var(--font-ui)",
+      textTransform: "uppercase",
+      letterSpacing: ".08em"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      flex: 1,
+      height: 1,
+      background: "#2E2C28"
+    }
+  }), "ou", /*#__PURE__*/React.createElement("span", {
+    style: {
+      flex: 1,
+      height: 1,
+      background: "#2E2C28"
+    }
+  })), showPwd && /*#__PURE__*/React.createElement("form", {
+    onSubmit: e => {
+      e.preventDefault();
+      if (onSubmit) onSubmit({
+        user: user,
+        password: pass
+      });
+    },
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: 14
+    }
+  }, /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("span", {
+    style: labelS
+  }, "Usu\xE1rio"), /*#__PURE__*/React.createElement("input", {
+    style: inputS,
+    value: user,
+    onChange: e => setUser(e.target.value),
+    autoComplete: "username"
+  })), /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("span", {
+    style: labelS
+  }, "Senha"), /*#__PURE__*/React.createElement("input", {
+    style: inputS,
+    type: "password",
+    value: pass,
+    onChange: e => setPass(e.target.value),
+    autoComplete: "current-password"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "flex-end"
+    }
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "#",
+    onClick: e => {
+      e.preventDefault();
+      if (onForgot) onForgot();
+    },
+    style: {
+      color: "#9DB8EC",
+      font: "500 13px/1 var(--font-ui)",
+      textDecoration: "none"
+    }
+  }, forgotLabel)), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    style: {
+      height: 52,
+      width: "100%",
+      background: "var(--primary)",
+      color: "#fff",
+      border: 0,
+      borderRadius: 4,
+      font: "600 15px/1 var(--font-ui)",
+      cursor: "pointer"
+    }
+  }, "Entrar"))), note && /*#__PURE__*/React.createElement("p", {
+    style: {
+      font: "400 12px/1.4 var(--font-ui)",
+      color: "#C9C5BD",
+      margin: "72px 0 0"
+    }
+  }, note))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "relative",
+      overflow: "hidden",
+      background: bg
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "absolute",
+      left: 0,
+      top: "25%",
+      display: "flex",
+      alignItems: "flex-start"
+    }
+  }, open && /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 400,
+      height: 400,
+      boxSizing: "border-box",
+      background: "#fff",
+      borderRadius: "0 0 12px 0",
+      padding: "24px 22px",
+      color: "#1B1A17",
+      overflowY: "auto"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      font: "400 17px/1.2 var(--font-ui)",
+      marginBottom: 14
+    }
+  }, "Release notes", release ? " — Build " + release : ""), releaseNotes.map((s, i) => /*#__PURE__*/React.createElement("details", {
+    key: i,
+    style: {
+      borderLeft: "2px solid #E6E8EE",
+      padding: "4px 8px",
+      font: "400 14px/1.5 var(--font-ui)"
+    }
+  }, /*#__PURE__*/React.createElement("summary", {
+    style: {
+      cursor: "pointer"
+    }
+  }, s.title), s.items && s.items.length > 0 && /*#__PURE__*/React.createElement("ul", {
+    style: {
+      margin: "6px 0 4px",
+      paddingLeft: 20,
+      color: "#4A4740"
+    }
+  }, s.items.map((it, j) => /*#__PURE__*/React.createElement("li", {
+    key: j
+  }, it)))))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => setOpen(!open),
+    "aria-expanded": open,
+    "aria-label": "Release notes",
+    style: {
+      width: 40,
+      height: 400,
+      flex: "0 0 auto",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: 14,
+      padding: "74px 0 0",
+      background: "#fff",
+      border: open ? 0 : "2px solid var(--primary)",
+      borderLeft: 0,
+      borderRadius: "0 10px 10px 0",
+      color: "var(--primary)",
+      cursor: "pointer",
+      boxSizing: "border-box"
+    }
+  }, /*#__PURE__*/React.createElement(Chevron, {
+    open: open
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      writingMode: "vertical-rl",
+      transform: "rotate(180deg)",
+      font: "400 17px/1 var(--font-ui)",
+      whiteSpace: "nowrap"
+    }
+  }, release ? release + " " : "", "Release notes")))));
+}
+Object.assign(__ds_scope, { LoginScreen });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "components/auth/LoginScreen.jsx", error: String((e && e.message) || e) }); }
 
 // components/core/Avatar.jsx
 try { (() => {
@@ -839,7 +1220,7 @@ function Lightbox({
   onPrev = null,
   onNext = null
 }) {
-  const ImageViewer = typeof window !== "undefined" && window.FINPECDesignSystem_ccaa11 && window.FINPECDesignSystem_ccaa11.ImageViewer || (() => null);
+  const ImageViewer = typeof window !== "undefined" && window.FINPECDesignSystem_f2149b && window.FINPECDesignSystem_f2149b.ImageViewer || (() => null);
   React.useEffect(() => {
     const onKey = e => {
       if (e.key === "Escape") onClose && onClose();
@@ -929,7 +1310,8 @@ try { (() => {
 /**
  * Application sidebar — dark warm-near-black chrome with brand lockup,
  * grouped nav, and a user footer. `groups` is [{ label, items:[{ id,
- * label, icon?, badge?, hot? }] }]; the active row shows the accent bar.
+ * label, icon?, badge?, hot?, children? }] }]; items with `children` are
+ * expandable/collapsible parents (e.g. "Configurações" → Cadastros, Acessos).
  */
 function Sidebar({
   brandWord = "FINPEC",
@@ -941,8 +1323,123 @@ function Sidebar({
   collapsed = false,
   onToggleCollapse,
   variant = "dark",
+  theme = null,
+  onToggleTheme,
+  onLogout,
+  showClock = true,
+  release = null,
   className = ""
 }) {
+  const [now, setNow] = React.useState(() => new Date());
+  React.useEffect(() => {
+    if (!showClock) return;
+    const t = setInterval(() => setNow(new Date()), 30000);
+    return () => clearInterval(t);
+  }, [showClock]);
+  const months = ["jan.", "fev.", "mar.", "abr.", "mai.", "jun.", "jul.", "ago.", "set.", "out.", "nov.", "dez."];
+  const dateStr = now.getDate() + " de " + months[now.getMonth()] + " de " + now.getFullYear();
+  const timeStr = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+  const isDark = theme === "dark";
+  const ico = d => /*#__PURE__*/React.createElement("svg", {
+    width: "18",
+    height: "18",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.9",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    dangerouslySetInnerHTML: {
+      __html: d
+    }
+  });
+  const sun = ico('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>');
+  const moon = ico('<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>');
+  const logout = ico('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/>');
+  const hasFoot = user || onToggleTheme || showClock || release || onLogout;
+  const containsActive = it => !!(it.children && it.children.some(c => c.id === activeId || containsActive(c)));
+  const [expanded, setExpanded] = React.useState(() => {
+    const s = {};
+    const walk = list => list.forEach(it => {
+      if (it.children) {
+        if (it.defaultExpanded || containsActive(it)) s[it.id] = true;
+        walk(it.children);
+      }
+    });
+    groups.forEach(g => walk(g.items || []));
+    return s;
+  });
+  React.useEffect(() => {
+    const add = {};
+    const walk = list => list.forEach(it => {
+      if (it.children) {
+        if (containsActive(it)) add[it.id] = true;
+        walk(it.children);
+      }
+    });
+    groups.forEach(g => walk(g.items || []));
+    if (Object.keys(add).length) setExpanded(s => Object.assign({}, s, add));
+  }, [activeId]);
+  const chev = open => /*#__PURE__*/React.createElement("svg", {
+    className: "ni-chev",
+    width: "14",
+    height: "14",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    style: {
+      transform: open ? "rotate(90deg)" : "none"
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "m9 6 6 6-6 6"
+  }));
+  const renderItem = (it, depth) => {
+    const hasKids = !!(it.children && it.children.length);
+    const open = !!expanded[it.id];
+    const tone = it.tone || (it.hot ? "hot" : "");
+    const parentActive = hasKids && containsActive(it);
+    const row = /*#__PURE__*/React.createElement("button", {
+      key: it.id,
+      className: ["fp-nav-item", depth > 0 ? "sub" : "", it.id === activeId ? "active" : "", parentActive ? "has-active" : ""].filter(Boolean).join(" "),
+      style: depth > 1 ? {
+        paddingLeft: 12 + 32 + (depth - 1) * 14
+      } : undefined,
+      onClick: () => {
+        if (hasKids) {
+          if (collapsed && onToggleCollapse) {
+            onToggleCollapse();
+            setExpanded(s => Object.assign({}, s, {
+              [it.id]: true
+            }));
+          } else setExpanded(s => Object.assign({}, s, {
+            [it.id]: !open
+          }));
+        } else if (onNavigate) onNavigate(it.id);
+      },
+      "aria-expanded": hasKids ? open : undefined,
+      title: collapsed ? typeof it.label === "string" ? it.label : undefined : undefined
+    }, depth === 0 && it.icon && /*#__PURE__*/React.createElement("span", {
+      className: "ni-icon"
+    }, it.icon), /*#__PURE__*/React.createElement("span", {
+      className: "ni-label"
+    }, it.label), it.badge != null && /*#__PURE__*/React.createElement("span", {
+      className: ["fp-nav-badge", tone].filter(Boolean).join(" ")
+    }, it.badge), (it.badge != null || it.dot || it.hot || parentActive) && depth === 0 && /*#__PURE__*/React.createElement("span", {
+      className: ["fp-nav-cdot", tone || (parentActive ? "info" : "")].filter(Boolean).join(" ")
+    }), it.badge == null && (it.dot || it.hot) && /*#__PURE__*/React.createElement("span", {
+      className: ["fp-nav-dot", tone].filter(Boolean).join(" ")
+    }), hasKids && chev(open));
+    if (!hasKids) return row;
+    return /*#__PURE__*/React.createElement("div", {
+      className: "fp-nav-tree",
+      key: it.id
+    }, row, open && !collapsed && /*#__PURE__*/React.createElement("div", {
+      className: "fp-nav-sub"
+    }, it.children.map(c => renderItem(c, depth + 1))));
+  };
   return /*#__PURE__*/React.createElement("aside", {
     className: ["fp-sidebar", collapsed ? "collapsed" : "", variant === "light" ? "light" : variant === "white" ? "white" : "", className].filter(Boolean).join(" ")
   }, /*#__PURE__*/React.createElement("div", {
@@ -982,42 +1479,45 @@ function Sidebar({
     key: gi
   }, g.label && /*#__PURE__*/React.createElement("div", {
     className: "fp-nav-group-label"
-  }, g.label), g.items.map(it => /*#__PURE__*/React.createElement("button", {
-    key: it.id,
-    className: ["fp-nav-item", it.id === activeId ? "active" : ""].filter(Boolean).join(" "),
-    onClick: () => onNavigate && onNavigate(it.id),
-    title: collapsed ? typeof it.label === "string" ? it.label : undefined : undefined
-  }, it.icon && /*#__PURE__*/React.createElement("span", {
-    className: "ni-icon"
-  }, it.icon), /*#__PURE__*/React.createElement("span", {
-    className: "ni-label"
-  }, it.label), it.badge != null && /*#__PURE__*/React.createElement("span", {
-    className: ["fp-nav-badge", it.tone || (it.hot ? "hot" : "")].filter(Boolean).join(" ")
-  }, it.badge), (it.badge != null || it.dot || it.hot) && /*#__PURE__*/React.createElement("span", {
-    className: ["fp-nav-cdot", it.tone || (it.hot ? "hot" : "")].filter(Boolean).join(" ")
-  }), it.badge == null && (it.dot || it.hot) && /*#__PURE__*/React.createElement("span", {
-    className: ["fp-nav-dot", it.tone || (it.hot ? "hot" : "")].filter(Boolean).join(" ")
-  })))))), user && /*#__PURE__*/React.createElement("div", {
+  }, g.label), g.items.map(it => renderItem(it, 0))))), hasFoot && /*#__PURE__*/React.createElement("div", {
     className: "fp-side-foot"
+  }, (onToggleTheme || showClock) && /*#__PURE__*/React.createElement("div", {
+    className: "fp-sf-row"
   }, /*#__PURE__*/React.createElement("div", {
+    className: "fp-sf-actions"
+  }, onToggleTheme && /*#__PURE__*/React.createElement("button", {
+    className: "fp-sf-btn",
+    onClick: onToggleTheme,
+    "aria-label": isDark ? "Mudar para modo claro" : "Mudar para modo escuro",
+    title: isDark ? "Modo claro" : "Modo escuro"
+  }, isDark ? moon : sun)), showClock && /*#__PURE__*/React.createElement("div", {
+    className: "fp-sf-clock",
+    title: dateStr + " · " + timeStr
+  }, /*#__PURE__*/React.createElement("span", null, dateStr), /*#__PURE__*/React.createElement("span", {
+    className: "fp-sf-time"
+  }, timeStr))), user && /*#__PURE__*/React.createElement("div", {
     className: "fp-side-user"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "fp-avatar",
-    style: {
-      width: 34,
-      height: 34,
-      fontSize: 12
-    }
+    className: "fp-avatar fp-sf-avatar"
   }, user.initials), /*#__PURE__*/React.createElement("div", {
     className: "fp-su-meta",
     style: {
-      overflow: "hidden"
+      overflow: "hidden",
+      flex: 1,
+      minWidth: 0
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "fp-su-name"
   }, user.name), /*#__PURE__*/React.createElement("div", {
     className: "fp-su-role"
-  }, user.role)))));
+  }, user.role)), onLogout && /*#__PURE__*/React.createElement("button", {
+    className: "fp-sf-btn fp-sf-logout",
+    onClick: onLogout,
+    "aria-label": "Sair",
+    title: "Sair"
+  }, logout)), release && /*#__PURE__*/React.createElement("div", {
+    className: "fp-sf-release"
+  }, release)));
 }
 Object.assign(__ds_scope, { Sidebar });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "components/navigation/Sidebar.jsx", error: String((e && e.message) || e) }); }
@@ -3308,7 +3808,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 // FINPEC Painel — product screens. Recreations of the real investor/admin
 // views, composed from the design-system components on the global namespace.
 
-const DS = window.FINPECDesignSystem_ccaa11;
+const DS = window.FINPECDesignSystem_f2149b;
 const {
   Button,
   IconButton,
@@ -3333,132 +3833,18 @@ const {
 function Login({
   onEnter
 }) {
-  const [keep, setKeep] = React.useState(true);
-  return /*#__PURE__*/React.createElement("div", {
-    className: "login-wrap",
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1.05fr",
-      height: "100%",
-      background: "var(--surface)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      placeItems: "center",
-      padding: 40
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: "100%",
-      maxWidth: 372
-    },
-    className: "fp-fade-in"
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 11,
-      marginBottom: 36
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: "../../assets/finpec-mark.png",
-    alt: "",
-    style: {
-      height: 38
-    }
-  }), /*#__PURE__*/React.createElement("span", {
-    style: {
-      font: "var(--fw-bold) 20px/1 var(--font-display)",
-      letterSpacing: "var(--ls-brand)",
-      color: "var(--ink)"
-    }
-  }, "FINPEC")), /*#__PURE__*/React.createElement("h1", {
-    style: {
-      font: "var(--fw-bold) 26px/1.1 var(--font-display)",
-      letterSpacing: "-0.01em",
-      color: "var(--ink)",
-      margin: "0 0 6px"
-    }
-  }, "Painel Administrativo"), /*#__PURE__*/React.createElement("p", {
-    style: {
-      color: "var(--muted)",
-      fontSize: 14,
-      margin: "0 0 28px"
-    }
-  }, "Acesse a opera\xE7\xE3o de cr\xE9dito rural."), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      flexDirection: "column",
-      gap: 16
-    }
-  }, /*#__PURE__*/React.createElement(Field, {
-    label: "E-mail"
-  }, /*#__PURE__*/React.createElement(Input, {
-    type: "email",
-    defaultValue: "joao.kraemer@finpec.com"
-  })), /*#__PURE__*/React.createElement(Field, {
-    label: "Senha"
-  }, /*#__PURE__*/React.createElement(Input, {
-    type: "password",
-    defaultValue: "senha-segura"
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between"
-    }
-  }, /*#__PURE__*/React.createElement(Checkbox, {
-    checked: keep,
-    onChange: e => setKeep(e.target.checked)
-  }, "Manter conectado"), /*#__PURE__*/React.createElement("a", {
-    className: "link",
-    style: {
-      color: "var(--accent)",
-      fontWeight: 600,
-      fontSize: 13,
-      textDecoration: "none"
-    }
-  }, "Esqueci a senha")), /*#__PURE__*/React.createElement(Button, {
-    variant: "primary",
-    block: true,
-    size: "lg",
-    onClick: onEnter
-  }, "Entrar no painel")))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "var(--side)",
-      position: "relative",
-      overflow: "hidden",
-      display: "grid",
-      placeItems: "center"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center"
-    }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: "../../assets/finpec-mark.png",
-    alt: "",
-    style: {
-      height: 96,
-      opacity: 0.96
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      font: "var(--fw-bold) 30px/1 var(--font-display)",
-      letterSpacing: "var(--ls-brand)",
-      color: "#fff",
-      marginTop: 22
-    }
-  }, "FINPEC"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      color: "var(--side-text-dim)",
-      fontSize: 14,
-      marginTop: 12,
-      maxWidth: 320,
-      lineHeight: 1.5
-    }
-  }, "Cr\xE9dito rural com lastro em CPR, integrado \xE0 B3 e aos indicadores do agroneg\xF3cio."))));
+  return /*#__PURE__*/React.createElement(DS.LoginScreen, {
+    methods: "both",
+    logoSrc: "../../assets/finpec-logo-branco.png",
+    systemName: "Painel",
+    systemTagline: "Investidor \xB7 Administrativo",
+    title: "Cr\xE9dito rural com lastro em CPR",
+    description: "Emiss\xE3o e gest\xE3o de CPRFs, integra\xE7\xE3o com a B3 e acompanhamento dos indicadores do agroneg\xF3cio.",
+    imageSrc: "../../assets/finpec-jornada-credito.jpg",
+    release: "0.2.0022",
+    onSso: onEnter,
+    onSubmit: onEnter
+  });
 }
 
 /* ---------------- Page head ---------------- */
@@ -4144,6 +4530,8 @@ Object.assign(window, {
   PAINEL
 });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/painel/painel-shared.jsx", error: String((e && e.message) || e) }); }
+
+__ds_ns.LoginScreen = __ds_scope.LoginScreen;
 
 __ds_ns.Avatar = __ds_scope.Avatar;
 
